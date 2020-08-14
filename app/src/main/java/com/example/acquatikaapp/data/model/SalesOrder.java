@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "sales_order",
-        indices = {@Index("dateIdx"), @Index(value = {"date"}, unique = true),
-        @Index("customerIdx"), @Index(value = {"customerId"})})
+        indices = {@Index(name = "dateIdx", value = {"date"}, unique = true),
+        @Index(name = "customerIdx", value = {"customer_id"})})
 public class SalesOrder {
 
     @PrimaryKey(autoGenerate = true)
@@ -24,22 +24,29 @@ public class SalesOrder {
     private int status;
 
     //values = OTC, DELIVERY
-    @ColumnInfo(name = "transactionType")
-    private int transactionType;
+    @ColumnInfo(name = "order_type")
+    private int orderType;
 
     // * 100
-    private long price;
+    @ColumnInfo(name = "total_price")
+    private long totalPrice;
+
+    private long discount;
 
     @ColumnInfo(name = "customer_id")
     private int customerId;
 
-    public SalesOrder(Date date, String receiptNumber, int status, int transactionType, long price, int customerId) {
+    private String remarks;
+
+    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String remarks) {
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
-        this.transactionType = transactionType;
-        this.price = price;
+        this.orderType = orderType;
+        this.totalPrice = totalPrice;
+        this.discount = discount;
         this.customerId = customerId;
+        this.remarks = remarks;
     }
 
     public long getId() {
@@ -74,20 +81,28 @@ public class SalesOrder {
         this.status = status;
     }
 
-    public int getTransactionType() {
-        return transactionType;
+    public int getOrderType() {
+        return orderType;
     }
 
-    public void setTransactionType(int transactionType) {
-        this.transactionType = transactionType;
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 
-    public long getPrice() {
-        return price;
+    public long getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(long price) {
-        this.price = price;
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public long getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(long discount) {
+        this.discount = discount;
     }
 
     public int getCustomerId() {
@@ -96,5 +111,13 @@ public class SalesOrder {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

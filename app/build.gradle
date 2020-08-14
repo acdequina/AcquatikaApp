@@ -36,4 +36,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:24.2.1'
 }

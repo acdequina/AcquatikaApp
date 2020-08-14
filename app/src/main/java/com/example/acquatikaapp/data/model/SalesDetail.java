@@ -2,9 +2,11 @@ package com.example.acquatikaapp.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "sales_detail")
+@Entity(tableName = "sales_detail",
+        indices = {@Index(name = "salesOrderIdx", value = {"sales_order_id"})})
 public class SalesDetail {
 
     @PrimaryKey(autoGenerate = true)
@@ -13,8 +15,10 @@ public class SalesDetail {
     @ColumnInfo(name = "product_id")
     private int productId;
 
+    // snapshot of the current price upon purchase
     // * 100
     private long price;
+
     private int quantity;
 
     @ColumnInfo(name = "sales_order_id")
