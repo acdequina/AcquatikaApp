@@ -2,6 +2,7 @@ package com.example.acquatikaapp.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -36,9 +37,10 @@ public class SalesOrder {
     @ColumnInfo(name = "customer_id")
     private int customerId;
 
-    private String remarks;
+    private String description;
 
-    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String remarks) {
+    @Ignore
+    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description) {
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
@@ -46,7 +48,19 @@ public class SalesOrder {
         this.totalPrice = totalPrice;
         this.discount = discount;
         this.customerId = customerId;
-        this.remarks = remarks;
+        this.description = description;
+    }
+
+    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description) {
+        this.id = id;
+        this.date = date;
+        this.receiptNumber = receiptNumber;
+        this.status = status;
+        this.orderType = orderType;
+        this.totalPrice = totalPrice;
+        this.discount = discount;
+        this.customerId = customerId;
+        this.description = description;
     }
 
     public long getId() {
@@ -113,11 +127,11 @@ public class SalesOrder {
         this.customerId = customerId;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

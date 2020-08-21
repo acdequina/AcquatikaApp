@@ -8,15 +8,21 @@ import androidx.room.Update;
 
 import com.example.acquatikaapp.data.model.SalesDetail;
 
+import java.util.List;
+
 @Dao
 public interface SalesDetailDao {
+
     @Insert
-    void insertSalesDetail(SalesDetail salesDetail);
+    void insert(SalesDetail salesDetail);
+
+    @Insert
+    void massInsert(List<SalesDetail> salesDetails);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateSalesDetail(SalesDetail salesDetail);
+    void update(SalesDetail salesDetail);
 
     @Delete
-    void deleteSalesDetail(SalesDetail salesDetail);
+    void delete(SalesDetail salesDetail);
 
 }

@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.MainActivity"
+    android:padding="16dp">
+    
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/customer_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="Customer name"/>
+        <TextView
+            android:id="@+id/sales_description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="Slim: x 1   Round: x 2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/total_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="P80"/>
+        <TextView
+            android:id="@+id/date_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="18:01"/>
+
+    </LinearLayout>
+
+</LinearLayout>

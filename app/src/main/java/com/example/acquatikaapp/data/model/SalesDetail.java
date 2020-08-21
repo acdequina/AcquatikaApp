@@ -2,6 +2,7 @@ package com.example.acquatikaapp.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -24,11 +25,24 @@ public class SalesDetail {
     @ColumnInfo(name = "sales_order_id")
     private long salesOrderId;
 
-    public SalesDetail(int productId, long price, int quantity, long salesOrderId) {
+    private String remarks;
+
+    @Ignore
+    public SalesDetail(int productId, long price, int quantity, long salesOrderId, String remarks) {
         this.productId = productId;
         this.price = price;
         this.quantity = quantity;
         this.salesOrderId = salesOrderId;
+        this.remarks = remarks;
+    }
+
+    public SalesDetail(long id, int productId, long price, int quantity, long salesOrderId, String remarks) {
+        this.id = id;
+        this.productId = productId;
+        this.price = price;
+        this.quantity = quantity;
+        this.salesOrderId = salesOrderId;
+        this.remarks = remarks;
     }
 
     public long getId() {
@@ -69,5 +83,13 @@ public class SalesDetail {
 
     public void setSalesOrderId(long salesOrderId) {
         this.salesOrderId = salesOrderId;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

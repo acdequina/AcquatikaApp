@@ -2,6 +2,7 @@ package com.example.acquatikaapp.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "customer")
@@ -18,7 +19,15 @@ public class Customer {
     @ColumnInfo(name = "contact_number")
     private String contactNumber;
 
+    @Ignore
     public Customer(String name, String address, String contactNumber) {
+        this.name = name;
+        this.address = address;
+        this.contactNumber = contactNumber;
+    }
+
+    public Customer(int id, String name, String address, String contactNumber) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.contactNumber = contactNumber;

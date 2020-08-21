@@ -13,11 +13,29 @@ import java.util.List;
 public class TransactionItemDetailDto {
 
     @Embedded
-    public LiveData<SalesOrder> salesOrder;
+    private SalesOrder salesOrder;
 
-    @Relation(
-            parentColumn = "id",
-            entityColumn = "sales_order_id"
-    )
-    public LiveData<List<SalesDetail>> salesDetails;
+    @Relation(parentColumn = "id", entityColumn = "sales_order_id", entity = SalesDetail.class)
+    private List<SalesDetail> salesDetails;
+
+    public TransactionItemDetailDto(SalesOrder salesOrder, List<SalesDetail> salesDetails) {
+        this.salesOrder = salesOrder;
+        this.salesDetails = salesDetails;
+    }
+
+    public SalesOrder getSalesOrder() {
+        return salesOrder;
+    }
+
+    public void setSalesOrder(SalesOrder salesOrder) {
+        this.salesOrder = salesOrder;
+    }
+
+    public List<SalesDetail> getSalesDetails() {
+        return salesDetails;
+    }
+
+    public void setSalesDetails(List<SalesDetail> salesDetails) {
+        this.salesDetails = salesDetails;
+    }
 }

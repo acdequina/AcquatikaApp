@@ -1,6 +1,7 @@
 package com.example.acquatikaapp.data.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "product")
@@ -13,7 +14,15 @@ public class Product {
     // * 100
     private long price;
 
+    @Ignore
     public Product(String name, double volume, long price) {
+        this.name = name;
+        this.volume = volume;
+        this.price = price;
+    }
+
+    public Product(int id, String name, double volume, long price) {
+        this.id = id;
         this.name = name;
         this.volume = volume;
         this.price = price;
