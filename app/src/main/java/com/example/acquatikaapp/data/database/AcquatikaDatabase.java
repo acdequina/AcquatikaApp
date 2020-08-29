@@ -72,11 +72,25 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
                     .insert(getCustomer());
 
             long soId = database.salesOrderDao()
-                    .insert(getSalesOrder((int) customerId));
+                    .insert(getSalesOrder((int) customerId, "Slim", 1));
 
             List<Long> productIds = database.productDao().massInsert(getProducts());
 
             database.salesDetailDao().insert(getSalesDetail(soId, productIds.get(0).intValue()));
+
+            long soId2 = database.salesOrderDao()
+                    .insert(getSalesOrder((int) customerId, "Round", 2));
+
+            database.salesDetailDao().insert(getSalesDetail(soId, productIds.get(1).intValue()));
+            database.salesDetailDao().insert(getSalesDetail(soId2, productIds.get(1).intValue()));
+
+            long soId3 = database.salesOrderDao()
+                    .insert(getSalesOrder((int) customerId, "Others", 3));
+
+            database.salesDetailDao().insert(getSalesDetail(soId3, productIds.get(2).intValue()));
+            database.salesDetailDao().insert(getSalesDetail(soId3, productIds.get(2).intValue()));
+            database.salesDetailDao().insert(getSalesDetail(soId3, productIds.get(2).intValue()));
+
         }
 
         public static Customer getCustomer() {
@@ -85,16 +99,16 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
 
         public static List<Product> getProducts() {
             List<Product> products = Arrays.asList(
-                    new Product("Slim", 20, 2000L),
-                    new Product("Round", 20, 2000L),
-                    new Product("Others", 0, 0)
+                    new Product("Slim", 20, 2000L, true),
+                    new Product("Round", 20, 2000L, true),
+                    new Product("Others", 0, 0, false)
             );
 
             return products;
         }
 
-        public static SalesOrder getSalesOrder(int customerId) {
-            String sampleRemarks = "Slim x 1";
+        public static SalesOrder getSalesOrder(int customerId, String prodName, int prodQty) {
+            String sampleRemarks = prodName +" x "+prodQty;
             return new SalesOrder(new Date(), "000000", 0, 0, 2000L, 0, customerId, sampleRemarks);
         }
 

@@ -10,18 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acquatikaapp.R;
-import com.example.acquatikaapp.data.dto.TransactionDto;
+import com.example.acquatikaapp.data.dto.SalesOrderDto;
 import com.example.acquatikaapp.ui.util.DisplayValueUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>{
 
     private Context mContext;
-    private List<TransactionDto> mTransactions;
+    private List<SalesOrderDto> mTransactions;
     private boolean mIsCurrentTransactions;
 
     public TransactionAdapter(Context context, boolean isCurrentTransactions) {
@@ -33,14 +31,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.transactions_item_layout, parent, false);
+                .inflate(R.layout.sales_order_item_layout, parent, false);
         return new TransactionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         String dateFormatPattern = "dd/M/yy - hh:mm a";
-        TransactionDto transaction = mTransactions.get(position);
+        SalesOrderDto transaction = mTransactions.get(position);
 
         holder.customerNameTv.setText(transaction.getName());
         holder.salesDetailTv.setText(transaction.getDescription());
@@ -66,7 +64,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return mTransactions.size();
     }
 
-    public void setTransactions(List<TransactionDto> transactions) {
+    public void setTransactions(List<SalesOrderDto> transactions) {
         mTransactions = transactions;
         notifyDataSetChanged();
     }

@@ -1,5 +1,6 @@
 package com.example.acquatikaapp.data.model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -14,18 +15,23 @@ public class Product {
     // * 100
     private long price;
 
+    @ColumnInfo(name = "is_on_dashboard")
+    private boolean isOnDashboard;
+
     @Ignore
-    public Product(String name, double volume, long price) {
+    public Product(String name, double volume, long price, boolean isOnDashboard) {
         this.name = name;
         this.volume = volume;
         this.price = price;
+        this.isOnDashboard = isOnDashboard;
     }
 
-    public Product(int id, String name, double volume, long price) {
+    public Product(int id, String name, double volume, long price, boolean isOnDashboard) {
         this.id = id;
         this.name = name;
         this.volume = volume;
         this.price = price;
+        this.isOnDashboard = isOnDashboard;
     }
 
     public int getId() {
@@ -58,5 +64,13 @@ public class Product {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public boolean getIsOnDashboard() {
+        return isOnDashboard;
+    }
+
+    public void setIsOnDashboard(boolean isOnDashboard) {
+        this.isOnDashboard = isOnDashboard;
     }
 }

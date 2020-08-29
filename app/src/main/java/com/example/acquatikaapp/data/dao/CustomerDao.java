@@ -27,8 +27,12 @@ public interface CustomerDao {
     @Delete
     void delete(Customer customer);
 
-//    @Query("SELECT id, name FROM customer ORDER BY name ASC")
-//    LiveData<List<CustomerNameIdDto>> getAllCustomerNameWithId();
+//    @Query("SELECT id FROM customer " +
+//            "WHERE name = :name")
+//    long getCustomerIdByName(String name);
+
+    @Query("SELECT id, name FROM customer ORDER BY name ASC")
+    LiveData<List<CustomerNameIdDto>> getAllNameWithId();
 //
 //    @Query("SELECT * FROM customer WHERE id =:id")
 //    LiveData<Customer> getCustomerById(int id);

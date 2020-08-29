@@ -1,14 +1,17 @@
 package com.example.acquatikaapp.data.repository;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
-import com.example.acquatikaapp.data.dao.SalesOrderDao;
 import com.example.acquatikaapp.data.database.AcquatikaDatabase;
-import com.example.acquatikaapp.data.dto.TransactionDto;
+import com.example.acquatikaapp.data.dto.CustomerNameIdDto;
+import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
+import com.example.acquatikaapp.data.dto.SalesOrderDto;
+import com.example.acquatikaapp.data.dto.TotalQuantityPerProductDto;
+import com.example.acquatikaapp.data.model.Customer;
+import com.example.acquatikaapp.data.model.SalesDetail;
 import com.example.acquatikaapp.data.model.SalesOrder;
 import com.example.acquatikaapp.data.util.AppExecutors;
 
@@ -17,55 +20,71 @@ import java.util.List;
 
 public class SalesOrderRepository {
 
-    private SalesOrderDao salesOrderDao;
+    private AcquatikaDatabase database;
     private AppExecutors appExecutors;
-    private long salesOrderId;
 
     public SalesOrderRepository(Application application) {
-        salesOrderDao = AcquatikaDatabase.getInstance(application).salesOrderDao();
+        database = AcquatikaDatabase.getInstance(application);
         appExecutors = AppExecutors.getInstance();
     }
 
-    public long insert(final SalesOrder salesOrder) {
+    public LiveData<List<SalesOrderDto>> getSalesOrders(Date fromDate, Date toDate,
+                                                        Integer status,
+                                                        String customerName,
+                                                        Integer orderType) {
+        return database.salesOrderDao().getSalesOrderDetails(fromDate, toDate, status, customerName, orderType);
+    }
+
+    public LiveData<Long> getCurrentTotalSales(Date dateNow) {
+        return database.salesOrderDao().getCurrentTotalSales(dateNow);
+    }
+
+    public LiveData<SalesLineGraphDto> getSalesAndDate(Date date) {
+        return database.salesOrderDao().getSalesAndDate(date);
+    }
+
+    public void insert(final CustomerNameIdDto customerDetails, final SalesOrder salesOrder, final List<SalesDetail> salesDetails) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                final long id = salesOrderDao.insert(salesOrder);
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        salesOrderId = id;
-                    }
-                });
-            }
-        });
+                int customerId = customerDetails.getId();
+                if(customerId <= 0) {
+                    customerId = (int) database.customerDao().insert(new Customer(customerDetails.getName()));
+                }
 
-        return salesOrderId;
-    }
-
-    public void update(final SalesOrder salesOrder) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                salesOrderDao.update(salesOrder);
+                salesOrder.setDate(new Date());
+                //TODO create receipt number generator
+                salesOrder.setReceiptNumber(null);
+                salesOrder.setCustomerId(customerId);
+                long salesOrderId = database.salesOrderDao().insert(salesOrder);
+                insertSalesDetails(salesOrderId, salesDetails);
             }
         });
     }
 
-    public void delete(final SalesOrder salesOrder) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                salesOrderDao.delete(salesOrder);
-            }
-        });
-    }
+//    private String generateDescription(List<SalesDetail> salesDetails) {
+//        ProductDao productDao = database.productDao();
+//        int listSize = salesDetails.size();
+//        StringBuilder descriptionSB = new StringBuilder();
+//        for (SalesDetail detail : salesDetails) {
+//            String productName = productDao.getProductNameById(detail.getProductId());
+//            descriptionSB.append(productName);
+//            descriptionSB.append(" x");
+//            descriptionSB.append(detail.getQuantity());
+//
+//            if(--listSize > 0) {
+//                descriptionSB.append("   ");
+//            }
+//        }
+//
+//        return descriptionSB.toString();
+//    }
 
-    public LiveData<List<TransactionDto>> getTransactions(Date fromDate, Date toDate,
-                                                          Integer status,
-                                                          String customerName,
-                                                          Integer orderType) {
-        return salesOrderDao.getTransactions(fromDate, toDate, status, customerName, orderType);
+    private void insertSalesDetails(long salesOrderId, List<SalesDetail> salesDetails) {
+        for(SalesDetail salesDetail : salesDetails) {
+            salesDetail.setSalesOrderId(salesOrderId);
+            database.salesDetailDao().insert(salesDetail);
+        }
     }
 
 

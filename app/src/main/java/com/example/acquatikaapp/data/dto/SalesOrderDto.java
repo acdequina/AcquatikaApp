@@ -2,7 +2,7 @@ package com.example.acquatikaapp.data.dto;
 
 import java.util.Date;
 
-public class TransactionDto {
+public class SalesOrderDto {
 
     private String name;
     private long totalPrice;
@@ -11,7 +11,7 @@ public class TransactionDto {
     private String description;
     private int status;
 
-    public TransactionDto(String name, long totalPrice, Date date, int orderType, String description, int status) {
+    public SalesOrderDto(String name, long totalPrice, Date date, int orderType, String description, int status) {
         this.name = name;
         this.totalPrice = totalPrice;
         this.date = date;

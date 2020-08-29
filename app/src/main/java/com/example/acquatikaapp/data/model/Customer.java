@@ -26,6 +26,11 @@ public class Customer {
         this.contactNumber = contactNumber;
     }
 
+    @Ignore
+    public Customer(String name) {
+        this.name = name;
+    }
+
     public Customer(int id, String name, String address, String contactNumber) {
         this.id = id;
         this.name = name;

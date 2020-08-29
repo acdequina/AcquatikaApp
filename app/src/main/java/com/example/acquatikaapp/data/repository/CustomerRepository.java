@@ -1,17 +1,20 @@
 package com.example.acquatikaapp.data.repository;
 
 import android.app.Application;
-import android.content.Context;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.acquatikaapp.data.dao.CustomerDao;
 import com.example.acquatikaapp.data.database.AcquatikaDatabase;
+import com.example.acquatikaapp.data.dto.CustomerNameIdDto;
 import com.example.acquatikaapp.data.model.Customer;
 import com.example.acquatikaapp.data.util.AppExecutors;
+
+import java.util.List;
 
 public class CustomerRepository {
 
     private CustomerDao customerDao;
-    private int customerId;
     private AppExecutors appExecutors;
 
     public CustomerRepository(Application application) {
@@ -19,21 +22,13 @@ public class CustomerRepository {
         appExecutors = AppExecutors.getInstance();
     }
 
-    public int insert(final Customer customer) {
+    public void insert(final Customer customer) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-               final long id = customerDao.insert(customer);
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        customerId = (int) id;
-                    }
-                });
+               customerDao.insert(customer);
             }
         });
-
-        return customerId;
     }
 
     public void update(final Customer customer) {
@@ -52,6 +47,10 @@ public class CustomerRepository {
                 customerDao.delete(customer);
             }
         });
+    }
+
+    public LiveData<List<CustomerNameIdDto>> getAllNameWithId() {
+        return customerDao.getAllNameWithId();
     }
 
 }

@@ -10,7 +10,7 @@ import com.example.acquatikaapp.data.model.SalesOrder;
 
 import java.util.List;
 
-public class TransactionItemDetailDto {
+public class SalesOrderWithDetailsDto {
 
     @Embedded
     private SalesOrder salesOrder;
@@ -18,7 +18,7 @@ public class TransactionItemDetailDto {
     @Relation(parentColumn = "id", entityColumn = "sales_order_id", entity = SalesDetail.class)
     private List<SalesDetail> salesDetails;
 
-    public TransactionItemDetailDto(SalesOrder salesOrder, List<SalesDetail> salesDetails) {
+    public SalesOrderWithDetailsDto(SalesOrder salesOrder, List<SalesDetail> salesDetails) {
         this.salesOrder = salesOrder;
         this.salesDetails = salesDetails;
     }
