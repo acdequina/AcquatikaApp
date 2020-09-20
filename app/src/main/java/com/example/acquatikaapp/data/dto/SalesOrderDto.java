@@ -1,70 +1,32 @@
 package com.example.acquatikaapp.data.dto;
 
+import androidx.room.Ignore;
+
+import com.example.acquatikaapp.data.dao.SalesOrderDao;
+import com.example.acquatikaapp.data.model.SalesOrder;
+
 import java.util.Date;
 
-public class SalesOrderDto {
+public class SalesOrderDto extends SalesOrder {
 
-    private String name;
-    private long totalPrice;
-    private Date date;
-    private int orderType;
-    private String description;
-    private int status;
+    private String customerName;
 
-    public SalesOrderDto(String name, long totalPrice, Date date, int orderType, String description, int status) {
-        this.name = name;
-        this.totalPrice = totalPrice;
-        this.date = date;
-        this.orderType = orderType;
-        this.description = description;
-        this.status = status;
+    public SalesOrderDto(long id, Date date, String receiptNumber, int status, int orderType,
+                         long totalPrice, long discount, int customerId, String description, String customerName) {
+        super(id, date, receiptNumber, status, orderType, totalPrice, discount, customerId, description);
+        this.customerName = customerName;
     }
 
-    public String getName() {
-        return name;
+    @Ignore
+    public SalesOrderDto(long totalPrice, String description) {
+        super(totalPrice, description);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public long getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(long totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(int orderType) {
-        this.orderType = orderType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

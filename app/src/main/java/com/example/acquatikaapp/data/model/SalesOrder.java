@@ -51,6 +51,12 @@ public class SalesOrder {
         this.description = description;
     }
 
+    @Ignore
+    public SalesOrder(long totalPrice, String description) {
+        this.totalPrice = totalPrice;
+        this.description = description;
+    }
+
     public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description) {
         this.id = id;
         this.date = date;

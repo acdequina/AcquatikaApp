@@ -10,43 +10,45 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acquatikaapp.R;
-import com.example.acquatikaapp.data.dto.SalesOrderDto;
+import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.ui.util.DisplayValueUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>{
+public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.SalesOrderViewHolder>{
 
+    final private ItemClickListener mItemClickListener;
     private Context mContext;
-    private List<SalesOrderDto> mTransactions;
+    private List<SalesOrderItemDto> mTransactions;
     private boolean mIsCurrentTransactions;
 
-    public TransactionAdapter(Context context, boolean isCurrentTransactions) {
+    public SalesOrderAdapter(Context context, boolean isCurrentTransactions, ItemClickListener listener) {
         mContext = context;
         mIsCurrentTransactions = isCurrentTransactions;
+        mItemClickListener = listener;
     }
 
     @NonNull
     @Override
-    public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SalesOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.sales_order_item_layout, parent, false);
-        return new TransactionViewHolder(view);
+        return new SalesOrderViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SalesOrderViewHolder holder, int position) {
         String dateFormatPattern = "dd/M/yy - hh:mm a";
-        SalesOrderDto transaction = mTransactions.get(position);
+        SalesOrderItemDto transaction = mTransactions.get(position);
 
         holder.customerNameTv.setText(transaction.getName());
         holder.salesDetailTv.setText(transaction.getDescription());
         holder.totalPriceTv.setText(
-                DisplayValueUtil.convertPriceToStringDisplayValue(transaction.getTotalPrice()));
+                DisplayValueUtil.convertPriceToDisplayValue(transaction.getTotalPrice()));
 
         if(mIsCurrentTransactions) {
-            dateFormatPattern = "hh:mm";
+            dateFormatPattern = "hh:mm aa";
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormatPattern);
@@ -64,25 +66,37 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return mTransactions.size();
     }
 
-    public void setTransactions(List<SalesOrderDto> transactions) {
+    public void setTransactions(List<SalesOrderItemDto> transactions) {
         mTransactions = transactions;
         notifyDataSetChanged();
     }
 
-    class TransactionViewHolder extends RecyclerView.ViewHolder {
+    public interface ItemClickListener {
+        void onItemClickListener(long itemId);
+    }
+
+    class SalesOrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView customerNameTv;
         TextView salesDetailTv;
         TextView totalPriceTv;
         TextView dateTimeTv;
 
-        public TransactionViewHolder(@NonNull View itemView) {
+        public SalesOrderViewHolder(@NonNull View itemView) {
             super(itemView);
 
             customerNameTv = itemView.findViewById(R.id.customer_name_tv);
             salesDetailTv = itemView.findViewById(R.id.sales_description_tv);
             totalPriceTv = itemView.findViewById(R.id.total_price_tv);
             dateTimeTv = itemView.findViewById(R.id.date_time_tv);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            long elementId = mTransactions.get(getAdapterPosition()).getId();
+            mItemClickListener.onItemClickListener(elementId);
         }
     }
 }

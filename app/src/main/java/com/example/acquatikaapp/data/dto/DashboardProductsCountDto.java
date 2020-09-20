@@ -1,6 +1,6 @@
 package com.example.acquatikaapp.data.dto;
 
-public class DashboardProductsCount {
+public class DashboardProductsCountDto {
 
     private String productLeftLabel;
 
@@ -12,10 +12,10 @@ public class DashboardProductsCount {
 
     private int productOthersCount;
 
-    public DashboardProductsCount() {
+    public DashboardProductsCountDto() {
     }
 
-    public DashboardProductsCount(String productLeftLabel, int productLeftCount, String productCenterLabel, int productCenterCount, int productOthersCount) {
+    public DashboardProductsCountDto(String productLeftLabel, int productLeftCount, String productCenterLabel, int productCenterCount, int productOthersCount) {
         this.productLeftLabel = productLeftLabel;
         this.productLeftCount = productLeftCount;
         this.productCenterLabel = productCenterLabel;

@@ -12,8 +12,7 @@ import androidx.room.Update;
 
 import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
 import com.example.acquatikaapp.data.dto.SalesOrderDto;
-import com.example.acquatikaapp.data.dto.SalesOrderWithDetailsDto;
-import com.example.acquatikaapp.data.dto.TotalQuantityPerProductDto;
+import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.data.model.SalesOrder;
 
 import java.util.Date;
@@ -31,9 +30,13 @@ public interface SalesOrderDao {
     @Delete
     void delete(SalesOrder salesOrder);
 
-    @Transaction
-    @Query("SELECT * FROM sales_order WHERE id = :id")
-    LiveData<SalesOrderWithDetailsDto> getSalesOrderDetailsById(long id);
+    @Query("SELECT sales_order.id, date, receipt_number," +
+            "status, order_type, total_price, " +
+            "discount, customer_id, description, customer.name as customerName " +
+            "FROM sales_order " +
+            "LEFT JOIN customer ON customer.id = sales_order.customer_id " +
+            "WHERE sales_order.id = :id")
+    LiveData<SalesOrderDto> getSalesOrderDetailsById(long id);
 
     //total sales on dashboard
     @Query("SELECT SUM(total_price) FROM sales_order WHERE status = 0 AND date >= :dateNow")
@@ -43,20 +46,8 @@ public interface SalesOrderDao {
     @Query("SELECT total_price AS totalPrice, date FROM sales_order WHERE status = 0 AND date >= :date")
     LiveData<SalesLineGraphDto> getSalesAndDate(Date date);
 
-    //current transaction list
-//    @Query("SELECT customer.name as name, " +
-//            "sales_order.total_price as totalPrice, product.name as itemName, " +
-//            "sales_detail.quantity as quantity, sales_order.date as date, " +
-//            "sales_order.status as status, sales_order.order_type as orderType " +
-//            "FROM sales_order " +
-//            "INNER JOIN sales_detail ON sales_detail.sales_order_id = sales_order.id " +
-//            "LEFT JOIN product ON product.id = sales_detail.product_id " +
-//            "LEFT JOIN customer ON customer.id = sales_order.customer_id " +
-//            "WHERE date >= :date ORDER BY status DESC, date DESC")
-//    LiveData<List<CurrentTransactionDto>> getCurrentTransactions(Date date);
-
-    //transaction logs
-    @Query("SELECT customer.name as name, " +
+    @Transaction
+    @Query("SELECT sales_order.id as id, customer.name as name, " +
             "sales_order.total_price as totalPrice, " +
             "sales_order.date as date, " +
             "sales_order.order_type as orderType, " +
@@ -68,20 +59,9 @@ public interface SalesOrderDao {
             "AND (:status IS NULL OR sales_order.status = :status)" +
             "AND (:customerName IS NULL OR customer.name = :customerName) " +
             "AND (:orderType IS NULL OR sales_order.order_type = :orderType) ")
-    LiveData<List<SalesOrderDto>> getSalesOrderDetails(Date fromDate, Date toDate,
-                                                       @Nullable Integer status,
-                                                       @Nullable String customerName,
-                                                       @Nullable Integer orderType);
-
-    @Query("SELECT customer.name as name, " +
-            "sales_order.total_price as totalPrice, " +
-            "sales_order.date as date, " +
-            "sales_order.order_type as orderType, " +
-            "sales_order.description as description, " +
-            "sales_order.status as status " +
-            "FROM sales_order " +
-            "LEFT JOIN customer ON customer.id = sales_order.customer_id "+
-            "WHERE (date BETWEEN :fromDate AND :toDate) ")
-    LiveData<List<SalesOrderDto>> getAllTransactions(Date fromDate, Date toDate);
+    LiveData<List<SalesOrderItemDto>> getSalesOrders(Date fromDate, Date toDate,
+                                                     @Nullable Integer status,
+                                                     @Nullable String customerName,
+                                                     @Nullable Integer orderType);
 
 }

@@ -8,11 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.acquatikaapp.data.dto.CustomerNameIdDto;
-import com.example.acquatikaapp.data.dto.CustomerTotalPurchaseDto;
 import com.example.acquatikaapp.data.model.Customer;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -27,18 +24,19 @@ public interface CustomerDao {
     @Delete
     void delete(Customer customer);
 
-//    @Query("SELECT id FROM customer " +
-//            "WHERE name = :name")
-//    long getCustomerIdByName(String name);
+    @Query("SELECT id FROM customer " +
+            "WHERE name = :name")
+    long getCustomerIdByName(String name);
 
-    @Query("SELECT id, name FROM customer ORDER BY name ASC")
-    LiveData<List<CustomerNameIdDto>> getAllNameWithId();
+    @Query("SELECT name FROM customer ORDER BY name ASC")
+    LiveData<List<String>> getAllCustomerName();
+
 //
 //    @Query("SELECT * FROM customer WHERE id =:id")
 //    LiveData<Customer> getCustomerById(int id);
-//
-//    @Query("SELECT name FROM customer WHERE id =:id")
-//    LiveData<String> getCustomerNameById(int id);
+
+    @Query("SELECT name FROM customer WHERE id =:id")
+    LiveData<String> getCustomerNameById(int id);
 //
 //    @Query("SELECT name, SUM(total_price) as totalPurchase FROM customer " +
 //            "INNER JOIN sales_order ON sales_order.customer_id = customer.id " +

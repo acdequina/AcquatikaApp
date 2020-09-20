@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.acquatikaapp.data.dao.CustomerDao;
 import com.example.acquatikaapp.data.database.AcquatikaDatabase;
-import com.example.acquatikaapp.data.dto.CustomerNameIdDto;
 import com.example.acquatikaapp.data.model.Customer;
 import com.example.acquatikaapp.data.util.AppExecutors;
 
@@ -49,8 +48,21 @@ public class CustomerRepository {
         });
     }
 
-    public LiveData<List<CustomerNameIdDto>> getAllNameWithId() {
-        return customerDao.getAllNameWithId();
+    public LiveData<List<String>> getAllCustomerName() {
+        return customerDao.getAllCustomerName();
+    }
+
+    public int getOrInsertCustomerByName(String name) {
+        int customerId = (int) customerDao.getCustomerIdByName(name);
+        if(customerId > 0) {
+            return customerId;
+        }
+
+        return (int) customerDao.insert(new Customer(name, null, null));
+    }
+
+    public LiveData<String> getCustomerNameById(int id) {
+        return customerDao.getCustomerNameById(id);
     }
 
 }

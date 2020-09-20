@@ -6,15 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.example.acquatikaapp.data.dto.DashboardProductsCount;
-import com.example.acquatikaapp.data.dto.ProductNameIdDto;
+import com.example.acquatikaapp.data.dto.DashboardProductsCountDto;
 import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
-import com.example.acquatikaapp.data.dto.SalesOrderDto;
+import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.data.dto.TotalQuantityPerProductDto;
-import com.example.acquatikaapp.data.repository.CustomerRepository;
+import com.example.acquatikaapp.data.model.Product;
 import com.example.acquatikaapp.data.repository.ProductRepository;
 import com.example.acquatikaapp.data.repository.SalesOrderRepository;
 import com.example.acquatikaapp.ui.util.DateUtil;
@@ -29,10 +27,13 @@ public class MainViewModel extends AndroidViewModel {
     private SalesOrderRepository salesOrderRepository;
     private ProductRepository productRepository;
     private LiveData<Long> currentTotalSales;
-    private LiveData<List<SalesOrderDto>> currentSalesOrders;
+
+    private LiveData<List<SalesOrderItemDto>> currentSalesOrders;
+
     private LiveData<SalesLineGraphDto> salesLineGraphValues;
     private LiveData<List<TotalQuantityPerProductDto>> productCount;
-    private LiveData<DashboardProductsCount> dashboardProductsCount;
+    private LiveData<DashboardProductsCountDto> dashboardProductsCount;
+    private LiveData<List<Product>> products;
 
     private Date fromDate = DateUtil.getStartOfDay(new Date());
     private Date toDate = DateUtil.getEndOfDay(new Date());
@@ -50,16 +51,17 @@ public class MainViewModel extends AndroidViewModel {
         currentTotalSales = salesOrderRepository.getCurrentTotalSales(fromDate);
         salesLineGraphValues = salesOrderRepository.getSalesAndDate(fromDate);
         productCount = productRepository.getProductCount(fromDate, toDate, null);
+        products = productRepository.getAllProducts();
 
-        dashboardProductsCount = Transformations.map(productCount, new Function<List<TotalQuantityPerProductDto>, DashboardProductsCount>() {
+        dashboardProductsCount = Transformations.map(productCount, new Function<List<TotalQuantityPerProductDto>, DashboardProductsCountDto>() {
             @Override
-            public DashboardProductsCount apply(List<TotalQuantityPerProductDto> products) {
+            public DashboardProductsCountDto apply(List<TotalQuantityPerProductDto> products) {
                return generateDashboardProductsCount(products);
             }
         });
     }
 
-    public LiveData<List<SalesOrderDto>> getCurrentSalesOrders() {
+    public LiveData<List<SalesOrderItemDto>> getCurrentSalesOrders() {
         return currentSalesOrders;
     }
 
@@ -71,19 +73,23 @@ public class MainViewModel extends AndroidViewModel {
         return currentTotalSales;
     }
 
-    public LiveData<DashboardProductsCount> getDashboardProductsCount() {
+    public LiveData<DashboardProductsCountDto> getDashboardProductsCount() {
         return dashboardProductsCount;
     }
 
-    private DashboardProductsCount generateDashboardProductsCount(List<TotalQuantityPerProductDto> products) {
-        DashboardProductsCount dashboardProductsCount = new DashboardProductsCount("N/A", 0, "N/A", 0, 0);
+    public LiveData<List<Product>> getAllProducts() {
+        return products;
+    }
+
+    private DashboardProductsCountDto generateDashboardProductsCount(List<TotalQuantityPerProductDto> products) {
+        DashboardProductsCountDto dashboardProductsCount = new DashboardProductsCountDto(null, 0, null, 0, 0);
         if (products == null || products.isEmpty()) {
             return dashboardProductsCount;
         }
 
         for (TotalQuantityPerProductDto product : products) {
             if (product.isOnDashboard()) {
-                if ("N/A".compareTo(dashboardProductsCount.getProductLeftLabel()) == 0) {
+                if (dashboardProductsCount.getProductLeftLabel() == null) {
                     dashboardProductsCount.setProductLeftLabel(product.getName());
                     dashboardProductsCount.setProductLeftCount(product.getTotal());
                     continue;

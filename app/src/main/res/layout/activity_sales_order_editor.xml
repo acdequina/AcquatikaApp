@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SalesOrderEditorActivity"
+    android:orientation="vertical"
+    android:background="#f6f6f6">
+
+    <LinearLayout
+        android:id="@+id/editor_upper_vg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <AutoCompleteTextView
+            android:id="@+id/editor_customer_name_atv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Customer name"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/editor_date_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="9/11/2020"
+                android:gravity="right"/>
+            <TextView
+                android:id="@+id/editor_time_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                tools:text="5:37 PM"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/white">
+        <ListView
+            android:id="@+id/editor_sales_detail_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/sales_detail_item_layout"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editor_order_type_rg"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WALK-IN"
+            android:id="@+id/editor_walkin_rb"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELIVERY"
+            android:id="@+id/editor_delivery_rb"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Pending order:"/>
+
+        <Switch
+            android:id="@+id/pending_order_sw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discount: "/>
+            <EditText
+                android:id="@+id/editor_discount_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:inputType="number"
+                android:digits="0123456789"
+                android:hint="0"
+                tools:text="0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:background="@android:color/white"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total: "/>
+            <TextView
+                android:id="@+id/editor_total_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:inputType="number"
+                android:hint="0"
+                tools:text="0.00"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/editor_buttons_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+        <Button
+            android:id="@+id/editor_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"/>
+        <Button
+            android:id="@+id/editor_checkout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checkout"/>
+    </LinearLayout>
+</LinearLayout>
