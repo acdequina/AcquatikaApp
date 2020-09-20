@@ -60,4 +60,8 @@ public class SalesDetailRepository {
     public LiveData<List<SalesDetailDto>> getSalesDetailsBySalesOrderId(long salesOrderId) {
         return salesDetailDao.getSalesDetailsBySalesOrderId(salesOrderId);
     }
+
+    public void massDelete(long salesOrderId) {
+        salesDetailDao.massDelete(salesOrderId);
+    }
 }

@@ -1,14 +1,19 @@
 package com.example.acquatikaapp.ui;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,6 +59,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     private Button mCheckOutBtn;
     private LinearLayout editButtonsLl;
 
+    private SalesOrderEditorViewModel viewModel;
     private SalesDetailAdapter salesDetailAdapter;
     private int mOrderType = 0;
     private int mStatus = 0;
@@ -85,6 +91,47 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         }
         setupLayout();
         setupViewModel();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(!isAdd) {
+            getMenuInflater().inflate(R.menu.menu_sales_order_editor, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.sales_order_action_delete) {
+            showDeleteDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete this record?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                viewModel.delete(salesOrder);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void setupLayout() {
@@ -137,7 +184,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
 
     private void setupViewModel() {
         SalesOrderEditorViewModelFactory factory = new SalesOrderEditorViewModelFactory(getApplication(), salesOrderId);
-        final SalesOrderEditorViewModel viewModel = ViewModelProviders.of(this, factory).get(SalesOrderEditorViewModel.class);
+        viewModel = ViewModelProviders.of(this, factory).get(SalesOrderEditorViewModel.class);
         final Context context = this;
         viewModel.getCustomerNames().observe(this, new Observer<List<String>>() {
             @Override
@@ -158,7 +205,9 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(SalesOrderDto salesOrderDto) {
                     salesOrder = salesOrderDto;
-                    setSalesOrderDataToUI(salesOrderDto);
+                    if(salesOrderDto != null) {
+                        setSalesOrderDataToUI(salesOrderDto);
+                    }
                 }
             });
 
@@ -166,7 +215,9 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(List<SalesDetailDto> salesDetailDtos) {
                     salesDetails = salesDetailDtos;
-                    setSalesDetailAdapter();
+                    if(salesDetailDtos != null) {
+                        setSalesDetailAdapter();
+                    }
                 }
             });
         }

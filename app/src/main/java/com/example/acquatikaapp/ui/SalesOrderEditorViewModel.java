@@ -52,6 +52,10 @@ public class SalesOrderEditorViewModel extends AndroidViewModel {
         salesOrderRepository.update(salesOrder);
     }
 
+    public void delete(SalesOrder salesOrder) {
+        salesOrderRepository.deleteSalesOrderTransaction(salesOrder, salesDetailRepository);
+    }
+
     public LiveData<List<String>> getCustomerNames() {
         return customerNames;
     }

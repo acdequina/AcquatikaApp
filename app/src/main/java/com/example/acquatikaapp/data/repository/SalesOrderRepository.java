@@ -1,6 +1,7 @@
 package com.example.acquatikaapp.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,11 +13,15 @@ import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.data.model.SalesDetail;
 import com.example.acquatikaapp.data.model.SalesOrder;
 import com.example.acquatikaapp.data.util.AppExecutors;
+import com.example.acquatikaapp.ui.SalesOrderEditorActivity;
 
+import java.sql.SQLDataException;
 import java.util.Date;
 import java.util.List;
 
 public class SalesOrderRepository {
+
+    private static final String TAG = SalesOrderRepository.class.getSimpleName();
 
     private SalesOrderDao salesOrderDao;
     private AppExecutors appExecutors;
@@ -59,20 +64,35 @@ public class SalesOrderRepository {
         return salesOrderDao.getSalesAndDate(date);
     }
 
+    public void deleteSalesOrderTransaction(final SalesOrder salesOrder, final SalesDetailRepository salesDetailRepository) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+//                try {
+//                    salesDetailRepository.massDelete(salesOrder.getId());
+//                    salesOrderDao.delete(salesOrder);
+//                } catch (Exception e) {
+//                    //Temporary ignore error
+//                    Log.i(TAG, e.getMessage());
+//                }
+
+                salesDetailRepository.massDelete(salesOrder.getId());
+                salesOrderDao.delete(salesOrder);
+            }
+        });
+
+    }
+
     public void insertSalesOrderTransaction(final String customerName, final SalesOrder salesOrder, final List<SalesDetail> salesDetails,
                                             final CustomerRepository customerRepository, final SalesDetailRepository salesDetailRepository) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                if(salesOrder != null) {
-                    int customerId = customerRepository.getOrInsertCustomerByName(customerName);
-                    salesOrder.setCustomerId(customerId);
-                }
+                int customerId = customerRepository.getOrInsertCustomerByName(customerName);
+                salesOrder.setCustomerId(customerId);
 
                 salesOrder.setDate(new Date());
                 //TODO create receipt number generator
-                salesOrder.setReceiptNumber(null);
-
                 long salesOrderId = salesOrderDao.insert(salesOrder);
                 salesDetailRepository.insertSalesDetails(salesOrderId, salesDetails);
             }

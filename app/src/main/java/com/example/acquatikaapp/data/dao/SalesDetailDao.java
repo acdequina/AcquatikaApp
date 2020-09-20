@@ -19,14 +19,15 @@ public interface SalesDetailDao {
     @Insert
     void insert(SalesDetail salesDetail);
 
-    @Insert
-    void massInsert(List<SalesDetail> salesDetails);
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(SalesDetail salesDetail);
 
     @Delete
     void delete(SalesDetail salesDetail);
+
+    @Query("DELETE FROM sales_detail " +
+            "WHERE sales_detail.sales_order_id = :salesOrderId")
+    void massDelete(long salesOrderId);
 
     @Query("SELECT sales_detail.id, product_id, quantity, sales_order_id, " +
             "sales_detail.price, remarks, product.name as productName FROM sales_detail " +
