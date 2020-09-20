@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:padding="8dp">
+    <TextView
+        android:id="@+id/editor_quantity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="0"
+        tools:text="1"/>
+    <TextView
+        android:id="@+id/editor_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_toRightOf="@+id/editor_quantity_tv"
+        android:layout_centerInParent="true"
+        android:paddingLeft="4dp"
+        android:paddingRight="16dp" />
+    <TextView
+        android:id="@+id/editor_product_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Slim"
+        android:layout_toRightOf="@+id/editor_x"/>
+
+    <TextView
+        android:id="@+id/editor_p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P"
+        android:layout_toLeftOf="@+id/editor_price_tv"
+        android:layout_centerInParent="true"
+        android:paddingRight="4dp"/>
+    <TextView
+        android:id="@+id/editor_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_alignParentEnd="true"
+        tools:text="20"/>
+</RelativeLayout>
