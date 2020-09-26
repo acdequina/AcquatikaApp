@@ -99,6 +99,13 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/sales_line_chart"
+                android:background="@color/colorPrimary"
+                />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -7,6 +7,7 @@ import com.example.acquatikaapp.data.database.AcquatikaDatabase;
 import com.example.acquatikaapp.data.model.Product;
 import com.example.acquatikaapp.data.model.SalesDetail;
 import com.example.acquatikaapp.data.repository.ProductRepository;
+import com.example.acquatikaapp.data.util.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public final class DisplayValueUtil {
+public final class ValueUtil {
 
 //    private static final int DECIMAL_PLACES = 2;
 
@@ -30,22 +31,32 @@ public final class DisplayValueUtil {
         return priceFormat.format(price / 100.0);
     }
 
-    public static String getDisplayValueDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return dateFormat.format(date);
-    }
-
-    public static String getDisplayValueTime(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
-        return dateFormat.format(date);
-    }
-
     public static long convertDisplayPriceToLong(String priceString) {
         return Long.parseLong(priceString) * 100L;
     }
 
-    public static String convertAmountToDisplayValue(long price) {
-        return String.valueOf(price / 100);
+    public static String convertAmountToDisplayValue(long amount) {
+        return String.valueOf(amount / 100);
+    }
+
+    public static String getOrderTypeName(int value) {
+        switch (value) {
+            case Constants.DELIVERY:
+                return "DELIVERY";
+            case Constants.WALKIN:
+            default:
+                return "WALK-IN";
+        }
+    }
+
+    public static String getStatusName(int value) {
+        switch (value) {
+            case Constants.PENDING:
+                return "PENDING";
+            case Constants.COMPLETE:
+            default:
+                return "COMPLETED";
+        }
     }
 
 }

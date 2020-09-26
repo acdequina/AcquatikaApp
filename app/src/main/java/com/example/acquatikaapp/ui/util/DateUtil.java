@@ -1,5 +1,7 @@
 package com.example.acquatikaapp.ui.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,6 +25,26 @@ public final class DateUtil {
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
+    }
+
+    public static String convertDateToStringDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return dateFormat.format(date);
+    }
+
+    public static String convertDateToStringTime(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        return dateFormat.format(date);
+    }
+
+    public static String convertDateTimeToString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy-hh:mm-aa");
+        return dateFormat.format(date);
+    }
+
+    public static String convertEpochMilliToTimeString(long epochMilli) {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        return dateFormat.format(epochMilli);
     }
 
 }

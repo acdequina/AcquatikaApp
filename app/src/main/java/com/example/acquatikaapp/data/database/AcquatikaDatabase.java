@@ -99,9 +99,9 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
 
         public static List<Product> getProducts() {
             List<Product> products = Arrays.asList(
+                    new Product("Custom", 0, 0, false),
                     new Product("Slim", 20, 2000L, true),
-                    new Product("Round", 20, 2000L, true),
-                    new Product("Custom", 0, 0, false)
+                    new Product("Round", 20, 2000L, true)
             );
 
             return products;

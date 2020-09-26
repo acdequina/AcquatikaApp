@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +21,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.acquatikaapp.R;
 import com.example.acquatikaapp.data.dto.AddSalesItemDto;
 import com.example.acquatikaapp.data.model.Product;
-import com.example.acquatikaapp.ui.util.DisplayValueUtil;
+import com.example.acquatikaapp.data.util.Constants;
+import com.example.acquatikaapp.ui.util.ValueUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +41,6 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
     private EditText mCustomProductNameEt;
     private EditText mCustomProductPriceEt;
 
-    private int LEFT_PRODUCT_INDEX = 0;
-    private int CENTER_PRODUCT_INDEX = 1;
-    private int CUSTOM_PRODUCT_INDEX = 2;
-
     private AddSalesItemDto leftProductDto;
     private AddSalesItemDto centerProductDto;
     private AddSalesItemDto customProductDto;
@@ -59,7 +57,7 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.add_product_dialog, null);
+        View view = layoutInflater.inflate(R.layout.add_sales_item_dialog, null);
         setupLayout(view);
 
         builder.setView(view);
@@ -75,12 +73,16 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
 
                 Intent addSalesOrderIntent = new Intent(getActivity(), SalesOrderEditorActivity.class);
                 getSalesDetailData();
-                if(mAddSalesItemDtos != null && !mAddSalesItemDtos.isEmpty()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList(SalesOrderEditorActivity.SALES_ORDER_ADD_EXTRA, mAddSalesItemDtos);
-                    addSalesOrderIntent.putExtra(SalesOrderEditorActivity.SALES_ORDER_ADD_EXTRA, bundle);
+                if(mAddSalesItemDtos == null || mAddSalesItemDtos.isEmpty()) {
+                    Toast.makeText(getContext(), "Please select at least 1 product.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(SalesOrderEditorActivity.SALES_ORDER_ADD_EXTRA, mAddSalesItemDtos);
+                addSalesOrderIntent.putExtra(SalesOrderEditorActivity.SALES_ORDER_ADD_EXTRA, bundle);
                 startActivity(addSalesOrderIntent);
+
             }
         });
 
@@ -92,7 +94,7 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
         mCustomProductNameEt = view.findViewById(R.id.dialog_customer_product_name_et);
         mCustomProductPriceEt = view.findViewById(R.id.dialog_customer_product_price_et);
         // TODO temporary static, revise on next version for dynamic buttons
-        final Product leftProduct = mProducts.get(LEFT_PRODUCT_INDEX);
+        final Product leftProduct = mProducts.get(Constants.SLIM);
         leftProductDto =
                 new AddSalesItemDto(leftProduct.getId(), leftProduct.getName(), 0, 0);
 
@@ -109,7 +111,7 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
             }
         });
 
-        final Product centerProduct = mProducts.get(CENTER_PRODUCT_INDEX);
+        final Product centerProduct = mProducts.get(Constants.ROUND);
         centerProductDto =
                 new AddSalesItemDto(centerProduct.getId(), centerProduct.getName(), 0, 0);
 
@@ -126,7 +128,7 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
             }
         });
 
-        final Product customProduct = mProducts.get(CUSTOM_PRODUCT_INDEX);
+        final Product customProduct = mProducts.get(Constants.CUSTOM);
         customProductDto =
                 new AddSalesItemDto(customProduct.getId(), customProduct.getName(), 0, 0);
 
@@ -162,13 +164,13 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
     private ArrayList<AddSalesItemDto> getSalesDetailData() {
         mAddSalesItemDtos = new ArrayList<>();
         if(leftProductDto.getQuantity() != 0) {
-            Product leftProduct = mProducts.get(LEFT_PRODUCT_INDEX);
+            Product leftProduct = mProducts.get(Constants.SLIM);
             leftProductDto.setPrice(leftProductDto.getQuantity()* leftProduct.getPrice());
             mAddSalesItemDtos.add(leftProductDto);
         }
 
         if(centerProductDto.getQuantity() != 0) {
-            Product centerProduct = mProducts.get(CENTER_PRODUCT_INDEX);
+            Product centerProduct = mProducts.get(Constants.ROUND);
             centerProductDto.setPrice(centerProductDto.getQuantity() * centerProduct.getPrice());
             mAddSalesItemDtos.add(centerProductDto);
         }
@@ -180,7 +182,7 @@ public class AddSalesItemDialog extends AppCompatDialogFragment {
 
             long productPrice = 0;
             if(mCustomProductPriceEt.getText() != null && !mCustomProductPriceEt.getText().toString().isEmpty()) {
-                productPrice = DisplayValueUtil.convertDisplayPriceToLong(mCustomProductPriceEt.getText().toString());
+                productPrice = ValueUtil.convertDisplayPriceToLong(mCustomProductPriceEt.getText().toString());
             }
 
             customProductDto.setPrice(productPrice * customProductDto.getQuantity());

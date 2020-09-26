@@ -30,7 +30,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private LiveData<List<SalesOrderItemDto>> currentSalesOrders;
 
-    private LiveData<SalesLineGraphDto> salesLineGraphValues;
+    private LiveData<List<SalesLineGraphDto>> salesLineGraphValues;
     private LiveData<List<TotalQuantityPerProductDto>> productCount;
     private LiveData<DashboardProductsCountDto> dashboardProductsCount;
     private LiveData<List<Product>> products;
@@ -65,7 +65,7 @@ public class MainViewModel extends AndroidViewModel {
         return currentSalesOrders;
     }
 
-    public LiveData<SalesLineGraphDto> getSalesLineGraphValues() {
+    public LiveData<List<SalesLineGraphDto>> getSalesLineGraphValues() {
         return salesLineGraphValues;
     }
 

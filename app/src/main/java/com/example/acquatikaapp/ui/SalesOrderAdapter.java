@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acquatikaapp.R;
 import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
-import com.example.acquatikaapp.ui.util.DisplayValueUtil;
+import com.example.acquatikaapp.ui.util.ValueUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -45,7 +45,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         holder.customerNameTv.setText(transaction.getName());
         holder.salesDetailTv.setText(transaction.getDescription());
         holder.totalPriceTv.setText(
-                DisplayValueUtil.convertPriceToDisplayValue(transaction.getTotalPrice()));
+                ValueUtil.convertPriceToDisplayValue(transaction.getTotalPrice()));
 
         if(mIsCurrentTransactions) {
             dateFormatPattern = "hh:mm aa";

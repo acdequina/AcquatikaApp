@@ -13,10 +13,8 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import com.example.acquatikaapp.R;
-import com.example.acquatikaapp.data.dto.AddSalesItemDto;
 import com.example.acquatikaapp.data.dto.SalesDetailDto;
-import com.example.acquatikaapp.data.model.SalesDetail;
-import com.example.acquatikaapp.ui.util.DisplayValueUtil;
+import com.example.acquatikaapp.ui.util.ValueUtil;
 
 public class SalesDetailAdapter extends ArrayAdapter<SalesDetailDto> {
 
@@ -40,7 +38,7 @@ public class SalesDetailAdapter extends ArrayAdapter<SalesDetailDto> {
         TextView nameTv = listItemView.findViewById(R.id.editor_product_name_tv);
 
         quantityTv.setText(String.valueOf(salesDetail.getQuantity()));
-        priceTv.setText(DisplayValueUtil.convertPriceToDisplayValue(salesDetail.getPrice()));
+        priceTv.setText(ValueUtil.convertPriceToDisplayValue(salesDetail.getPrice()));
         nameTv.setText(salesDetail.getProductName());
 
         return listItemView;

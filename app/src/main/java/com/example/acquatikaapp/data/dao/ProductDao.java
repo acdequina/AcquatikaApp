@@ -30,7 +30,7 @@ public interface ProductDao {
     @Delete
     void delete(Product product);
 
-    @Query("SELECT * FROM product ORDER BY name DESC")
+    @Query("SELECT * FROM product ORDER BY id ASC")
     LiveData<List<Product>> getAllProducts();
 
     @Query("SELECT * FROM product WHERE id =:id")

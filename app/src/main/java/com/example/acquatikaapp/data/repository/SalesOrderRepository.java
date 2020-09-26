@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.acquatikaapp.data.dao.SalesOrderDao;
 import com.example.acquatikaapp.data.database.AcquatikaDatabase;
+import com.example.acquatikaapp.data.dto.ExportDataDto;
 import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
 import com.example.acquatikaapp.data.dto.SalesOrderDto;
 import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
@@ -60,7 +61,7 @@ public class SalesOrderRepository {
         return salesOrderDao.getCurrentTotalSales(dateNow);
     }
 
-    public LiveData<SalesLineGraphDto> getSalesAndDate(Date date) {
+    public LiveData<List<SalesLineGraphDto>> getSalesAndDate(Date date) {
         return salesOrderDao.getSalesAndDate(date);
     }
 
@@ -68,16 +69,13 @@ public class SalesOrderRepository {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-//                try {
-//                    salesDetailRepository.massDelete(salesOrder.getId());
-//                    salesOrderDao.delete(salesOrder);
-//                } catch (Exception e) {
-//                    //Temporary ignore error
-//                    Log.i(TAG, e.getMessage());
-//                }
-
-                salesDetailRepository.massDelete(salesOrder.getId());
-                salesOrderDao.delete(salesOrder);
+                try {
+                    salesDetailRepository.massDelete(salesOrder.getId());
+                    salesOrderDao.delete(salesOrder);
+                } catch (Exception e) {
+                    //Temporary ignore error
+                    Log.i(TAG, e.getMessage());
+                }
             }
         });
 
@@ -101,6 +99,10 @@ public class SalesOrderRepository {
 
     public LiveData<SalesOrderDto> getSalesOrderDetailsById(long id) {
        return salesOrderDao.getSalesOrderDetailsById(id);
+    }
+
+    public List<ExportDataDto> getExportData() {
+        return salesOrderDao.getExportData();
     }
 
 }
