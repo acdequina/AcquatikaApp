@@ -6,21 +6,31 @@
     android:layout_height="wrap_content"
     tools:context=".ui.MainActivity"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/order_type_status_iv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_store_white_24dp"
+        android:padding="8dp"
+        android:background="@drawable/order_type_circle"/>
     
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:paddingLeft="16dp"
+        android:layout_toRightOf="@+id/order_type_status_iv"
         android:orientation="vertical">
 
         <TextView
+            style="@style/ListItemLargeText"
             android:id="@+id/customer_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             tools:text="Customer name"/>
         <TextView
+            style="@style/ListItemSubText"
             android:id="@+id/sales_description_tv"
-            android:layout_width="210dp"
             android:layout_height="wrap_content"
             tools:text="Slim: x 1   Round: x 2   Others: x 2"
             android:singleLine="true"
@@ -36,11 +46,13 @@
         android:gravity="right">
 
         <TextView
+            style="@style/ListItemLargeText"
             android:id="@+id/total_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             tools:text="P80"/>
         <TextView
+            style="@style/ListItemSubText"
             android:id="@+id/date_time_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

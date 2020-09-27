@@ -15,97 +15,126 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <TextView
+                    style="@style/HeaderSubTextLight"
+                    android:id="@+id/dashboard_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Total Sales: "/>
+                    android:textColor="@color/shadedWhite"
+                    tools:text="September 26, 2020 "/>
 
                 <TextView
                     android:id="@+id/current_total_sales_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    style="@style/LargeTextLight"
+                    android:textSize="30dp"
                     tools:text="$1000"/>
+<!--                android:textSize="40dp"-->
+
+                <TextView
+                    style="@style/HeaderSubTextLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Current Sales"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/product_left_label_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="N/A: "
-                        tools:text="Slim: "/>
+                    android:layout_alignParentLeft="true"
+                    android:paddingStart="30dp"
+                    style="@style/DashBoardItemLayout">
 
                     <TextView
                         android:id="@+id/product_left_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/LargeTextLightSub"
                         tools:text="10"/>
+
+                    <TextView
+                        android:id="@+id/product_left_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/HeaderSubTextLight"
+                        android:text="N/A"
+                        tools:text="Slim "/>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/product_center_label_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="N/A: "
-                        tools:text="Round: "/>
+                    style="@style/DashBoardItemLayout"
+                    android:layout_centerHorizontal="true">
 
                     <TextView
                         android:id="@+id/product_center_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/LargeTextLightSub"
                         tools:text="20"/>
+
+                    <TextView
+                        android:id="@+id/product_center_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/HeaderSubTextLight"
+                        android:text="N/A"
+                        tools:text="Round"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Others: "/>
+                    style="@style/DashBoardItemLayout"
+                    android:layout_alignParentRight="true"
+                    android:paddingEnd="40dp">
 
                     <TextView
                         android:id="@+id/others_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/LargeTextLightSub"
                         tools:text="15"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/HeaderSubTextLight"
+                        android:text="Others"/>
+
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <com.github.mikephil.charting.charts.LineChart
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/sales_line_chart"
-                android:background="@color/colorPrimary"
-                />
+                android:layout_height="150dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp">
+                <com.github.mikephil.charting.charts.LineChart
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/sales_line_chart"
+                    android:background="@color/colorPrimary"
+                    />
+            </FrameLayout>
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

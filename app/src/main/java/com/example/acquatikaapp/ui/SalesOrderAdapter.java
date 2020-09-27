@@ -1,12 +1,15 @@
 package com.example.acquatikaapp.ui;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acquatikaapp.R;
@@ -47,6 +50,10 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         holder.totalPriceTv.setText(
                 ValueUtil.convertPriceToDisplayValue(transaction.getTotalPrice()));
 
+        holder.orderTypeStatusIv.setImageResource(getOrderImageId(transaction.getOrderType()));
+        GradientDrawable statusCircle = (GradientDrawable) holder.orderTypeStatusIv.getBackground();
+        statusCircle.setColor(ContextCompat.getColor(mContext, getStatusColor(transaction.getStatus())));
+
         if(mIsCurrentTransactions) {
             dateFormatPattern = "hh:mm aa";
         }
@@ -81,6 +88,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         TextView salesDetailTv;
         TextView totalPriceTv;
         TextView dateTimeTv;
+        ImageView orderTypeStatusIv;
 
         public SalesOrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +97,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
             salesDetailTv = itemView.findViewById(R.id.sales_description_tv);
             totalPriceTv = itemView.findViewById(R.id.total_price_tv);
             dateTimeTv = itemView.findViewById(R.id.date_time_tv);
+            orderTypeStatusIv = itemView.findViewById(R.id.order_type_status_iv);
 
             itemView.setOnClickListener(this);
         }
@@ -99,4 +108,25 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
             mItemClickListener.onItemClickListener(elementId);
         }
     }
+
+    private int getOrderImageId(int orderType) {
+        switch (orderType) {
+            case 1:
+                return R.drawable.ic_local_shipping_white_24dp;
+            case 0:
+            default:
+                return R.drawable.ic_store_white_24dp;
+        }
+    }
+
+    private int getStatusColor(int status) {
+        switch (status) {
+            case 1:
+                return R.color.flatRed;
+            case 0:
+            default:
+                return R.color.colorAccent;
+        }
+    }
+
 }

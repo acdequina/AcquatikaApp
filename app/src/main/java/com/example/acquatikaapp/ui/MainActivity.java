@@ -30,6 +30,7 @@ import com.example.acquatikaapp.data.model.Product;
 import com.example.acquatikaapp.data.util.Constants;
 import com.example.acquatikaapp.data.util.DataExporter;
 import com.example.acquatikaapp.data.util.NumberUtil;
+import com.example.acquatikaapp.ui.util.DateUtil;
 import com.example.acquatikaapp.ui.util.ValueUtil;
 import com.example.acquatikaapp.ui.util.TimeAxisValueFormatter;
 import com.github.mikephil.charting.charts.LineChart;
@@ -41,8 +42,12 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private TextView mCurrentDateTv;
     private TextView mCurrentTotalSalesTv;
     private TextView mProductLeftLabelTv;
     private TextView mProductCenterLabelTv;
@@ -70,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setElevation(0);
+
         setupLayout();
         setupViewModel();
     }
@@ -89,12 +97,18 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         //Line chart
         setupLineChart();
 
+        mCurrentDateTv = findViewById(R.id.dashboard_date_tv);
         mCurrentTotalSalesTv = findViewById(R.id.current_total_sales_tv);
         mProductLeftLabelTv = findViewById(R.id.product_left_label_tv);
         mProductLeftCountTv = findViewById(R.id.product_left_count_tv);
         mProductCenterLabelTv = findViewById(R.id.product_center_label_tv);
         mProductCenterCountTv = findViewById(R.id.product_center_count_tv);
         mOthersCountTv = findViewById(R.id.others_count_tv);
+
+        DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+        String currentDateString = dateFormat.format(new Date());
+
+        mCurrentDateTv.setText(currentDateString);
 
         mAddSalesOrderButton = findViewById(R.id.sales_order_add_fab);
         mAddSalesOrderButton.setOnClickListener(new View.OnClickListener() {
@@ -164,11 +178,11 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
             @Override
             public void onChanged(DashboardProductsCountDto products) {
                 if(products.getProductLeftLabel() != null) {
-                    mProductLeftLabelTv.setText(products.getProductLeftLabel() + ": ");
+                    mProductLeftLabelTv.setText(products.getProductLeftLabel());
                 }
 
                 if(products.getProductCenterLabel()  != null) {
-                    mProductCenterLabelTv.setText(products.getProductCenterLabel() + ": ");
+                    mProductCenterLabelTv.setText(products.getProductCenterLabel());
                 }
 
                 mProductLeftCountTv.setText(String.valueOf(products.getProductLeftCount()));
@@ -276,8 +290,10 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
 
         YAxis leftAxis = mSalesLineChart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setTextSize(10);
         YAxis rightAxis = mSalesLineChart.getAxisRight();
         rightAxis.setTextColor(Color.WHITE);
+        rightAxis.setTextSize(10);
 
         XAxis xAxis = mSalesLineChart.getXAxis();
         xAxis.setDrawGridLines(false);
@@ -288,5 +304,6 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         xAxis.setLabelCount(Constants.TIME_XAXIS_MAX, true);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(7f);
+        xAxis.setTextSize(10);
     }
 }
