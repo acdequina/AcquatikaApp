@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AddSalesItemActivity"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:id="@+id/item_selection_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/first_card_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ItemCardView"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/shadedWhite">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/add_item_left_product_iv"
+                    style="@style/ItemImageSelection"
+                    android:src="@drawable/slim_gallon"/>
+
+                <TextView
+                    android:id="@+id/add_item_left_product_count_tv"
+                    style="@style/TintedText"
+                    tools:text="Slim"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/second_card_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ItemCardView"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/shadedWhite"
+            android:layout_below="@+id/first_card_item">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/add_item_center_product_iv"
+                    style="@style/ItemImageSelection"
+                    android:src="@drawable/round_gallon"/>
+
+                <TextView
+                    android:id="@+id/add_item_center_product_count_tv"
+                    style="@style/TintedText"
+                    tools:text="Round"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/custom_card_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ItemCardView"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/shadedWhite"
+            android:layout_below="@+id/second_card_item">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/add_item_custom_iv"
+                    style="@style/ItemImageSelection"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/custom_product"/>
+
+                <TextView
+                    android:id="@+id/add_item_custom_count_tv"
+                    style="@style/TintedText"
+                    tools:text="Custom"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/custom_product_form_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_below="@+id/item_selection_rl">
+
+        <ImageView
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="#f6f6f6"
+            android:layout_height="8dp"
+            android:layout_width="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_gravity="right">
+
+            <EditText
+                android:id="@+id/add_item_customer_product_name_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="16dp"
+                android:hint="Custom name"/>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="P"/>
+
+                <EditText
+                    android:id="@+id/add_item_customer_product_price_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:gravity="right"
+                    android:hint="0"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Checkout"/>
+
+</RelativeLayout>

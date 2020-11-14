@@ -7,4 +7,6 @@
     <color name="darkGray">#454e5f</color>
     <color name="lightGray">#797e88</color>
     <color name="flatRed">#bf4b5a</color>
+    <color name="tintBlack">#CC333333</color>
+    <color name="yellowGray">#f6f6f6</color>
 </resources>

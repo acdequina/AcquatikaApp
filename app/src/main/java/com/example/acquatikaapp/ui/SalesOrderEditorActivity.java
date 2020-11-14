@@ -57,6 +57,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     private Button mCancelBtn;
     private Button mCheckOutBtn;
     private LinearLayout editButtonsLl;
+    private EditText mRemarksEt;
 
     private SalesOrderEditorViewModel viewModel;
     private SalesDetailAdapter salesDetailAdapter;
@@ -64,6 +65,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     private int mStatus = 0;
     private long mTotalPrice;
     private long salesOrderId;
+    private long mTotalDeliveryCharge = 0;
     private Date currentDate = new Date();
     private boolean isAdd;
     private SalesOrderDto salesOrder;
@@ -147,6 +149,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         mDateTv.setText(DateUtil.convertDateToStringDate(currentDate));
         mTimeTv.setText(DateUtil.convertDateToStringTime(currentDate));
         editButtonsLl = findViewById(R.id.editor_buttons_ll);
+        mRemarksEt = findViewById(R.id.editor_remarks_et);
         mPendingOrderSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -168,12 +171,12 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                 switch (checkedId) {
                     case R.id.editor_delivery_rb:
                         mOrderType = 1;
-                        updateTotalPrice(500);
+                        updateTotalPrice(mTotalDeliveryCharge);
                         break;
                     case R.id.editor_walkin_rb:
                     default:
                         mOrderType = 0;
-                        updateTotalPrice(-500);
+                        updateTotalPrice(-mTotalDeliveryCharge);
                         break;
                 }
             }
@@ -239,12 +242,14 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                     salesOrder.setOrderType(mOrderType);
                     salesOrder.setTotalPrice(mTotalPrice);
                     salesOrder.setDiscount(getDiscountValue());
+                    salesOrder.setRemarks(getRemarks());
                     viewModel.insert(customerName, salesOrder, salesDetails);
                 } else {
                     salesOrder.setDiscount(getDiscountValue());
                     salesOrder.setStatus(mStatus);
                     salesOrder.setOrderType(mOrderType);
                     salesOrder.setTotalPrice(mTotalPrice);
+                    salesOrder.setRemarks(getRemarks());
                     viewModel.update(salesOrder);
                 }
                 finish();
@@ -287,6 +292,14 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         return ValueUtil.convertDisplayPriceToLong(discountString);
     }
 
+    private String getRemarks() {
+        if(mRemarksEt.getText() == null && mRemarksEt.getText().toString().isEmpty()) {
+            return null;
+        }
+
+        return mRemarksEt.getText().toString().trim();
+    }
+
     private void updateTotalPrice(long valueToAdd) {
         mTotalPrice += valueToAdd;
         mTotalPriceTv.setText(ValueUtil.convertPriceToDisplayValue(mTotalPrice));
@@ -311,9 +324,12 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         if(status) {
             mCheckOutBtn.setText("Save");
             mCustomerNameAtv.setEnabled(false);
-            mOrderTypeRg.setEnabled(false);
         } else {
+            mRemarksEt.setEnabled(false);
+            mOrderTypeRg.setEnabled(false);
             mCustomerNameAtv.setEnabled(false);
+            mDiscountEt.setEnabled(false);
+            mPendingOrderSw.setEnabled(false);
             editButtonsLl.setVisibility(View.GONE);
         }
     }
@@ -346,7 +362,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
             ));
 
             totalPrice += detail.getPrice();
-
+            mTotalDeliveryCharge += Constants.DELIVERY_CHARGE;
             descriptionSB.append(detail.getProductName());
             descriptionSB.append(" x ");
             descriptionSB.append(detail.getQuantity());

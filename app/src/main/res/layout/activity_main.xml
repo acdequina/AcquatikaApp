@@ -153,7 +153,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="@android:color/white"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_add_shopping_cart_white_24dp"
         />
 
 </FrameLayout>

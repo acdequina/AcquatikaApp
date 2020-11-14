@@ -106,15 +106,6 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
 
             return products;
         }
-
-        public static SalesOrder getSalesOrder(int customerId, String prodName, int prodQty) {
-            String sampleRemarks = prodName +" x "+prodQty;
-            return new SalesOrder(new Date(), "000000", 0, 0, 2000L, 0, customerId, sampleRemarks);
-        }
-
-        public static SalesDetail getSalesDetail(long salesOrderId, int productId) {
-            return new SalesDetail(productId, 2000L, 1, salesOrderId, null);
-        }
     }
 
     public abstract CustomerDao customerDao();

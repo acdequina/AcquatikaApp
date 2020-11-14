@@ -18,13 +18,15 @@ public class ExportDataDto {
 
     private int quantity;
 
+    private String remarks;
+
     private long salesOrderId;
 
     private int status;
 
     private long totalPrice;
 
-    public ExportDataDto(String customerName, Date date, long discount, int orderType, long price, String productName, int quantity, long salesOrderId, int status, long totalPrice) {
+    public ExportDataDto(String customerName, Date date, long discount, int orderType, long price, String productName, int quantity, String remarks, long salesOrderId, int status, long totalPrice) {
         this.customerName = customerName;
         this.date = date;
         this.discount = discount;
@@ -32,6 +34,7 @@ public class ExportDataDto {
         this.price = price;
         this.productName = productName;
         this.quantity = quantity;
+        this.remarks = remarks;
         this.salesOrderId = salesOrderId;
         this.status = status;
         this.totalPrice = totalPrice;
@@ -115,5 +118,13 @@ public class ExportDataDto {
 
     public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

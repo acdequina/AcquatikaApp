@@ -20,4 +20,8 @@ public class Constants {
     public static final int TIME_XAXIS_MAX = 6;
     public static final int TIME_XAXIS_MIN = 1;
 
+
+    //DELIVERY CHARGE (temporary until we have system settings)
+    public static final int DELIVERY_CHARGE = 500;
+
 }

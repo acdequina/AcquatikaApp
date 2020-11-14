@@ -12,10 +12,12 @@ import com.example.acquatikaapp.data.util.Constants;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class ValueUtil {
 
@@ -27,7 +29,7 @@ public final class ValueUtil {
 //        priceBd = priceBd.setScale(DECIMAL_PLACES, RoundingMode.HALF_UP);
 //        return NumberFormat.getCurrencyInstance().format(priceBd);
 
-        NumberFormat priceFormat = NumberFormat.getCurrencyInstance();
+        NumberFormat priceFormat = new DecimalFormat("₱#,###");
         return priceFormat.format(price / 100.0);
     }
 

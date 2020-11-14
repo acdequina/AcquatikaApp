@@ -39,8 +39,10 @@ public class SalesOrder {
 
     private String description;
 
+    private String remarks;
+
     @Ignore
-    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description) {
+    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description, String remarks) {
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
@@ -49,6 +51,7 @@ public class SalesOrder {
         this.discount = discount;
         this.customerId = customerId;
         this.description = description;
+        this.remarks = remarks;
     }
 
     @Ignore
@@ -57,7 +60,7 @@ public class SalesOrder {
         this.description = description;
     }
 
-    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description) {
+    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description, String remarks) {
         this.id = id;
         this.date = date;
         this.receiptNumber = receiptNumber;
@@ -67,6 +70,7 @@ public class SalesOrder {
         this.discount = discount;
         this.customerId = customerId;
         this.description = description;
+        this.remarks = remarks;
     }
 
     public long getId() {
@@ -139,5 +143,13 @@ public class SalesOrder {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

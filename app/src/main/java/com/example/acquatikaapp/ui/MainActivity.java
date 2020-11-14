@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
     private RecyclerView mCurrentSalesOrderRv;
     private SalesOrderAdapter mSalesOrderAdapter;
 
-    private List<Product> mProducts;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         mAddSalesOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSalesItemDialog();
+                Intent addSalesOrderIntent = new Intent(MainActivity.this, AddSalesItemActivity.class);
+                startActivity(addSalesOrderIntent);
             }
         });
 
@@ -191,24 +190,12 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
             }
         });
 
-        viewModel.getAllProducts().observe(this, new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                mProducts = products;
-            }
-        });
-
         viewModel.getSalesLineGraphValues().observe(this, new Observer<List<SalesLineGraphDto>>() {
             @Override
             public void onChanged(List<SalesLineGraphDto> salesLineGraphDtos) {
                 setLineChartData(salesLineGraphDtos);
             }
         });
-    }
-
-    private void addSalesItemDialog() {
-        AddSalesItemDialog addSalesItemDialog = new AddSalesItemDialog(mProducts);
-        addSalesItemDialog.show(getSupportFragmentManager(), "Select a Product");
     }
 
     @Override
