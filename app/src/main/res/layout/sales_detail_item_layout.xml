@@ -8,12 +8,14 @@
     android:padding="8dp">
     <TextView
         android:id="@+id/editor_quantity_tv"
+        style="@style/ListItemLargeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="0"
         tools:text="1"/>
     <TextView
         android:id="@+id/editor_x"
+        style="@style/ListItemLargeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="x"
@@ -23,21 +25,14 @@
         android:paddingRight="16dp" />
     <TextView
         android:id="@+id/editor_product_name_tv"
+        style="@style/ListItemLargeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Slim"
         android:layout_toRightOf="@+id/editor_x"/>
-
-    <TextView
-        android:id="@+id/editor_p"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="P"
-        android:layout_toLeftOf="@+id/editor_price_tv"
-        android:layout_centerInParent="true"
-        android:paddingRight="4dp"/>
     <TextView
         android:id="@+id/editor_price_tv"
+        style="@style/ListItemLargeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"

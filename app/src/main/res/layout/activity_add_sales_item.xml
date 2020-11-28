@@ -144,9 +144,12 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/sales_item_place_order_btn"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Checkout"/>
+        style="@style/OkButton"
+        android:layout_margin="8dp"
+        android:text="Place Order"/>
 
 </RelativeLayout>

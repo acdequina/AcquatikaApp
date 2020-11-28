@@ -22,7 +22,7 @@ public class TimeAxisValueFormatter extends ValueFormatter {
             return DateUtil.convertEpochMilliToTimeString(mMinTime);
         }
 
-        long epochMilliValue = NumberUtil.mapRange(Constants.TIME_XAXIS_MIN, Constants.TIME_XAXIS_MAX, mMinTime, mMaxTime, Math.round(value));
+        long epochMilliValue = NumberUtil.mapRangeAxisToDate(Constants.TIME_XAXIS_MIN, Constants.TIME_XAXIS_MAX, mMinTime, mMaxTime, value);
 
         return DateUtil.convertEpochMilliToTimeString(epochMilliValue);
     }

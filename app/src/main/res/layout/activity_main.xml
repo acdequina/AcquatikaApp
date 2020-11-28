@@ -63,7 +63,7 @@
                         android:id="@+id/product_left_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLightSub"
+                        style="@style/LargeTextLight"
                         tools:text="10"/>
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:id="@+id/product_center_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLightSub"
+                        style="@style/LargeTextLight"
                         tools:text="20"/>
 
                     <TextView
@@ -109,7 +109,7 @@
                         android:id="@+id/others_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLightSub"
+                        style="@style/LargeTextLight"
                         tools:text="15"/>
 
                     <TextView

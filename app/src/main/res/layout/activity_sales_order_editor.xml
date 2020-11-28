@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SalesOrderEditorActivity"
+    android:padding="8dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,13 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@android:color/white">
+        style="@style/EditorSection">
 
         <AutoCompleteTextView
             android:id="@+id/editor_customer_name_atv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/LargeText"
             android:hint="Customer name"/>
+
+        <TextView
+            android:id="@+id/editor_customer_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LargeText"
+            android:hint="Customer name"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,12 +41,15 @@
                 android:id="@+id/editor_date_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/ListItemLargeText"
                 tools:text="9/11/2020"
+                android:paddingBottom="4dp"
                 android:gravity="right"/>
             <TextView
                 android:id="@+id/editor_time_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/ListItemSubText"
                 android:gravity="right"
                 tools:text="5:37 PM"/>
 
@@ -48,9 +62,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@android:color/white">
+        style="@style/EditorSection">
         <ListView
             android:id="@+id/editor_sales_detail_lv"
             android:layout_width="match_parent"
@@ -58,46 +70,58 @@
             tools:listitem="@layout/sales_detail_item_layout"/>
     </LinearLayout>
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editor_order_type_rg"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@android:color/white"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WALK-IN"
-            android:id="@+id/editor_walkin_rb"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DELIVERY"
-            android:id="@+id/editor_delivery_rb"/>
-    </RadioGroup>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp">
+        style="@style/EditorSection"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ListItemLargeText"
+            android:text="Order Type:"
+            android:paddingBottom="16dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editor_order_type_rg"
+            android:orientation="horizontal"
+            android:minHeight="90dp"
+            android:gravity="center">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_selector"
+                android:id="@+id/editor_walkin_rb"
+                android:text="Walk-in"
+                android:drawableLeft="@drawable/ic_store_white_24dp"
+                style="@style/RadioButtonSelection"
+                android:layout_marginRight="60dp"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_selector"
+                android:id="@+id/editor_delivery_rb"
+                android:text="Delivery"
+                android:drawableLeft="@drawable/ic_local_shipping_white_24dp"
+                style="@style/RadioButtonSelection"
+                android:layout_marginLeft="60dp"/>
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@android:color/white"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            android:layout_marginTop="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/ListItemLargeText"
                 android:text="Pending order:"/>
 
             <Switch
@@ -107,65 +131,81 @@
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editor_remarks_et"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Remarks"/>
+            android:orientation="horizontal"
+            android:background="@android:color/white"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ListItemLargeText"
+                android:text="Remarks:"
+                android:paddingRight="8dp" />
+
+            <EditText
+                android:id="@+id/editor_remarks_et"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="@android:color/white"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp">
-        <LinearLayout
+        style="@style/EditorSection">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ListItemLargeText"
+                android:textStyle="normal"
+                android:layout_centerVertical="true"
                 android:text="Discount: "/>
             <EditText
                 android:id="@+id/editor_discount_et"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                style="@style/ListItemLargeText"
+                android:layout_alignParentRight="true"
+                android:textStyle="normal"
+                android:gravity="end"
                 android:inputType="number"
                 android:digits="0123456789"
                 android:hint="0"
                 tools:text="0"/>
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right"
-            android:background="@android:color/white"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ListItemLargeText"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:text="Total: "/>
             <TextView
                 android:id="@+id/editor_total_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
+                android:layout_alignParentRight="true"
+                style="@style/ListItemLargeText"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:inputType="number"
                 android:hint="0"
                 tools:text="0.00"/>
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -176,17 +216,12 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@android:color/white"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp">
-        <Button
-            android:id="@+id/editor_cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"/>
+        android:padding="8dp">
         <Button
             android:id="@+id/editor_checkout_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/OkButton"
             android:text="Checkout"/>
     </LinearLayout>
 </LinearLayout>

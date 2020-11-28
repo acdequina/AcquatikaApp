@@ -30,7 +30,7 @@ public interface SalesDetailDao {
     void massDelete(long salesOrderId);
 
     @Query("SELECT sales_detail.id, product_id, quantity, sales_order_id, " +
-            "sales_detail.price, remarks, product.name as productName FROM sales_detail " +
+            "sales_detail.price, description, product.name as productName FROM sales_detail " +
             "LEFT JOIN product ON product.id = sales_detail.product_id " +
             "WHERE sales_detail.sales_order_id = :salesOrderId")
     LiveData<List<SalesDetailDto>> getSalesDetailsBySalesOrderId(long salesOrderId);

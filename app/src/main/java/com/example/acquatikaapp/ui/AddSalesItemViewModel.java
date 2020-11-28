@@ -9,9 +9,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.acquatikaapp.data.dao.ProductDao;
+import com.example.acquatikaapp.data.dto.AddSalesItemDto;
 import com.example.acquatikaapp.data.model.Product;
 import com.example.acquatikaapp.data.repository.ProductRepository;
+import com.example.acquatikaapp.data.util.Constants;
+import com.example.acquatikaapp.ui.util.ValueUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +58,5 @@ public class AddSalesItemViewModel extends AndroidViewModel {
 
         return mapIdProduct;
     }
-
 
 }

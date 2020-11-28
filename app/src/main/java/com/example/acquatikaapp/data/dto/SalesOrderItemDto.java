@@ -9,16 +9,16 @@ public class SalesOrderItemDto {
     private long totalPrice;
     private Date date;
     private int orderType;
-    private String description;
+    private String summary;
     private int status;
 
-    public SalesOrderItemDto(long id, String name, long totalPrice, Date date, int orderType, String description, int status) {
+    public SalesOrderItemDto(long id, String name, long totalPrice, Date date, int orderType, String summary, int status) {
         this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
         this.date = date;
         this.orderType = orderType;
-        this.description = description;
+        this.summary = summary;
         this.status = status;
     }
 
@@ -62,12 +62,12 @@ public class SalesOrderItemDto {
         this.orderType = orderType;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public int getStatus() {

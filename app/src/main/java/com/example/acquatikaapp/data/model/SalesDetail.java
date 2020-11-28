@@ -25,24 +25,24 @@ public class SalesDetail {
     @ColumnInfo(name = "sales_order_id")
     private long salesOrderId;
 
-    private String remarks;
+    private String description;
 
     @Ignore
-    public SalesDetail(int productId, long price, int quantity, long salesOrderId, String remarks) {
+    public SalesDetail(int productId, long price, int quantity, long salesOrderId, String description) {
         this.productId = productId;
         this.price = price;
         this.quantity = quantity;
         this.salesOrderId = salesOrderId;
-        this.remarks = remarks;
+        this.description = description;
     }
 
-    public SalesDetail(long id, int productId, long price, int quantity, long salesOrderId, String remarks) {
+    public SalesDetail(long id, int productId, long price, int quantity, long salesOrderId, String description) {
         this.id = id;
         this.productId = productId;
         this.price = price;
         this.quantity = quantity;
         this.salesOrderId = salesOrderId;
-        this.remarks = remarks;
+        this.description = description;
     }
 
     public long getId() {
@@ -85,11 +85,11 @@ public class SalesDetail {
         this.salesOrderId = salesOrderId;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

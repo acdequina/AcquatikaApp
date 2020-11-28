@@ -51,7 +51,7 @@
             android:id="@+id/total_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            tools:text="P80"/>
+            tools:text="80"/>
         <TextView
             style="@style/ListItemSubText"
             android:id="@+id/date_time_tv"

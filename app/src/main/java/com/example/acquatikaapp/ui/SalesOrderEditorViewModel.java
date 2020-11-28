@@ -75,7 +75,7 @@ public class SalesOrderEditorViewModel extends AndroidViewModel {
             dto.setPrice(salesDetail.getPrice());
             dto.setQuantity(salesDetail.getQuantity());
             dto.setProductId(salesDetail.getProductId());
-            String productName = salesDetail.getRemarks() != null ? salesDetail.getRemarks() : salesDetail.getProductName();
+            String productName = salesDetail.getDescription() != null ? salesDetail.getDescription() : salesDetail.getProductName();
             dto.setProductName(productName);
             addSalesItemDtos.add(dto);
         }

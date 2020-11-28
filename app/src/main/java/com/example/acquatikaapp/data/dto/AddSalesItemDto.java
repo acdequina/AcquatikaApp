@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 public class AddSalesItemDto implements Parcelable {
 
-    private Long id;
-
     private long price;
 
     private int quantity;
@@ -25,43 +23,11 @@ public class AddSalesItemDto implements Parcelable {
         this.productName = productName;
     }
 
-    public AddSalesItemDto(Long id, long price, int quantity, int productId, String productName) {
-        this.id = id;
-        this.price = price;
-        this.quantity = quantity;
-        this.productId = productId;
-        this.productName = productName;
-    }
-
     protected AddSalesItemDto(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
         price = in.readLong();
         quantity = in.readInt();
         productId = in.readInt();
         productName = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
-        }
-        dest.writeLong(price);
-        dest.writeInt(quantity);
-        dest.writeInt(productId);
-        dest.writeString(productName);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<AddSalesItemDto> CREATOR = new Creator<AddSalesItemDto>() {
@@ -75,14 +41,6 @@ public class AddSalesItemDto implements Parcelable {
             return new AddSalesItemDto[size];
         }
     };
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public long getPrice() {
         return price;
@@ -114,5 +72,18 @@ public class AddSalesItemDto implements Parcelable {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(price);
+        dest.writeInt(quantity);
+        dest.writeInt(productId);
+        dest.writeString(productName);
     }
 }

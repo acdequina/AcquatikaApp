@@ -9,14 +9,14 @@ public class SalesDetailDto extends SalesDetail {
     private String productName;
 
     @Ignore
-    public SalesDetailDto(int productId, long price, int quantity, long salesOrderId, String remarks, String productName) {
-        super(productId, price, quantity, salesOrderId, remarks);
+    public SalesDetailDto(int productId, long price, int quantity, long salesOrderId, String description, String productName) {
+        super(productId, price, quantity, salesOrderId, description);
         this.productName = productName;
     }
 
 
-    public SalesDetailDto(long id, int productId, long price, int quantity, long salesOrderId, String remarks, String productName) {
-        super(id, productId, price, quantity, salesOrderId, remarks);
+    public SalesDetailDto(long id, int productId, long price, int quantity, long salesOrderId, String description, String productName) {
+        super(id, productId, price, quantity, salesOrderId, description);
         this.productName = productName;
     }
 

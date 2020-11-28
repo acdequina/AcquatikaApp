@@ -12,9 +12,9 @@ public class Constants {
 
     //TODO TEMPORARY
     //PRODUCTS
-    public static final int CUSTOM = 0;
-    public static final int SLIM = 1;
-    public static final int ROUND = 2;
+    public static final int CUSTOM = 1;
+    public static final int SLIM = 2;
+    public static final int ROUND = 3;
 
     //GRAPH AXIS ITEM LIMIT
     public static final int TIME_XAXIS_MAX = 6;

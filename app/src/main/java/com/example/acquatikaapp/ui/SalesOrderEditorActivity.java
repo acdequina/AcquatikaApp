@@ -3,6 +3,7 @@ package com.example.acquatikaapp.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -22,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     private static final String TAG = SalesOrderEditorActivity.class.getSimpleName();
 
     private AutoCompleteTextView mCustomerNameAtv;
+    private TextView mCustomerNameTv;
     private TextView mDateTv;
     private TextView mTimeTv;
     private ListView mSalesDetailLv;
@@ -54,7 +57,6 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     private EditText mDiscountEt;
     private TextView mTotalPriceTv;
     private ArrayAdapter customerAtvAdapter;
-    private Button mCancelBtn;
     private Button mCheckOutBtn;
     private LinearLayout editButtonsLl;
     private EditText mRemarksEt;
@@ -75,6 +77,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_order_editor);
+        setTitle("Order Summary");
         setupLayout();
 
         Intent intent = getIntent();
@@ -137,6 +140,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
 
     private void setupLayout() {
         mCustomerNameAtv = findViewById(R.id.editor_customer_name_atv);
+        mCustomerNameTv = findViewById(R.id.editor_customer_name_tv);
         mDateTv = findViewById(R.id.editor_date_tv);
         mTimeTv = findViewById(R.id.editor_time_tv);
         mSalesDetailLv = findViewById(R.id.editor_sales_detail_lv);
@@ -144,7 +148,6 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         mPendingOrderSw = findViewById(R.id.pending_order_sw);
         mDiscountEt = findViewById(R.id.editor_discount_et);
         mTotalPriceTv = findViewById(R.id.editor_total_tv);
-        mCancelBtn = findViewById(R.id.editor_cancel_btn);
         mCheckOutBtn = findViewById(R.id.editor_checkout_btn);
         mDateTv.setText(DateUtil.convertDateToStringDate(currentDate));
         mTimeTv.setText(DateUtil.convertDateToStringTime(currentDate));
@@ -154,13 +157,6 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mStatus = isChecked ? 1 : 0;
-            }
-        });
-
-        mCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 
@@ -243,6 +239,7 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                     salesOrder.setTotalPrice(mTotalPrice);
                     salesOrder.setDiscount(getDiscountValue());
                     salesOrder.setRemarks(getRemarks());
+                    salesOrder.setDeliveryCharge(mTotalDeliveryCharge);
                     viewModel.insert(customerName, salesOrder, salesDetails);
                 } else {
                     salesOrder.setDiscount(getDiscountValue());
@@ -250,9 +247,11 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
                     salesOrder.setOrderType(mOrderType);
                     salesOrder.setTotalPrice(mTotalPrice);
                     salesOrder.setRemarks(getRemarks());
+                    salesOrder.setDeliveryCharge(mTotalDeliveryCharge);
                     viewModel.update(salesOrder);
                 }
-                finish();
+
+                NavUtils.navigateUpFromSameTask(SalesOrderEditorActivity.this);
             }
         });
 
@@ -311,7 +310,9 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     }
 
     private void setSalesOrderDataToUI(SalesOrderDto data) {
-        mCustomerNameAtv.setText(data.getCustomerName());
+        mCustomerNameTv.setText(data.getCustomerName());
+        mCustomerNameAtv.setVisibility(View.GONE);
+        mCustomerNameTv.setVisibility(View.VISIBLE);
         mDateTv.setText(DateUtil.convertDateToStringDate(data.getDate()));
         mTimeTv.setText(DateUtil.convertDateToStringTime(data.getDate()));
         mOrderTypeRg.check(getOrderTypeViewId(data.getOrderType()));
@@ -320,17 +321,21 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
         mDiscountEt.setText(ValueUtil.convertAmountToDisplayValue(data.getDiscount()));
         mTotalPrice = data.getTotalPrice();
         mTotalPriceTv.setText(ValueUtil.convertPriceToDisplayValue(data.getTotalPrice()));
+        mRemarksEt.setText(data.getRemarks());
+        mTotalDeliveryCharge = data.getDeliveryCharge();
 
         if(status) {
             mCheckOutBtn.setText("Save");
-            mCustomerNameAtv.setEnabled(false);
         } else {
             mRemarksEt.setEnabled(false);
             mOrderTypeRg.setEnabled(false);
-            mCustomerNameAtv.setEnabled(false);
             mDiscountEt.setEnabled(false);
             mPendingOrderSw.setEnabled(false);
             editButtonsLl.setVisibility(View.GONE);
+            RadioButton walkinButton = findViewById(getOrderTypeViewId(Constants.WALKIN));
+            walkinButton.setEnabled(false);
+            RadioButton deliveryButton = findViewById(getOrderTypeViewId(Constants.DELIVERY));
+            deliveryButton.setEnabled(false);
         }
     }
 
@@ -347,35 +352,35 @@ public class SalesOrderEditorActivity extends AppCompatActivity {
     public void processSalesItemDetail(List<AddSalesItemDto> addSalesItemDtos) {
         long totalPrice = 0;
         salesDetails = new ArrayList<>();
-        StringBuilder descriptionSB = new StringBuilder();
+        StringBuilder summarySB = new StringBuilder();
         int listSize = addSalesItemDtos.size();
 
         for (AddSalesItemDto detail : addSalesItemDtos) {
-            String remarks = getRemarks(detail);
+            String description = getDescription(detail);
             salesDetails.add(new SalesDetailDto(
                     detail.getProductId(),
                     detail.getPrice(),
                     detail.getQuantity(),
                     0L,
-                    remarks,
-                    remarks != null ? remarks : detail.getProductName()
+                    description,
+                    description != null ? description : detail.getProductName()
             ));
 
             totalPrice += detail.getPrice();
-            mTotalDeliveryCharge += Constants.DELIVERY_CHARGE;
-            descriptionSB.append(detail.getProductName());
-            descriptionSB.append(" x ");
-            descriptionSB.append(detail.getQuantity());
+            mTotalDeliveryCharge += Constants.DELIVERY_CHARGE * detail.getQuantity();
+            summarySB.append(detail.getProductName());
+            summarySB.append(" x ");
+            summarySB.append(detail.getQuantity());
 
             if(--listSize > 0) {
-                descriptionSB.append("   ");
+                summarySB.append("   ");
             }
         }
 
-        salesOrder = new SalesOrderDto(totalPrice, descriptionSB.toString());
+        salesOrder = new SalesOrderDto(totalPrice, summarySB.toString());
     }
 
-    private String getRemarks(AddSalesItemDto dto) {
+    private String getDescription(AddSalesItemDto dto) {
         if(dto.getProductId() != Constants.CUSTOM) {
             return null;
         }

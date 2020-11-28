@@ -81,14 +81,16 @@ public class DataExporter {
                      csvData.add(new String[] {
                              data.getCustomerName(),
                              String.valueOf(data.getDate()),
-                             ValueUtil.convertPriceToDisplayValue(data.getDiscount()),
+                             ValueUtil.convertAmountToDisplayValue(data.getDeliveryCharge()),
+                             ValueUtil.convertAmountToDisplayValue(data.getDiscount()),
                              ValueUtil.getOrderTypeName(data.getOrderType()),
-                             ValueUtil.convertPriceToDisplayValue(data.getPrice()),
+                             ValueUtil.convertAmountToDisplayValue(data.getPrice()),
                              data.getProductName(),
                              String.valueOf(data.getQuantity()),
+                             data.getRemarks(),
                              String.valueOf(data.getSalesOrderId()),
                              ValueUtil.getStatusName(data.getStatus()),
-                             ValueUtil.convertPriceToDisplayValue(data.getTotalPrice())
+                             ValueUtil.convertAmountToDisplayValue(data.getTotalPrice())
                      });
                  }
 

@@ -11,15 +11,15 @@ public class SalesOrderDto extends SalesOrder {
 
     private String customerName;
 
-    public SalesOrderDto(long id, Date date, String receiptNumber, int status, int orderType,
-                         long totalPrice, long discount, int customerId, String description, String remarks, String customerName) {
-        super(id, date, receiptNumber, status, orderType, totalPrice, discount, customerId, description, remarks);
+    public SalesOrderDto(long id, Date date, String receiptNumber, int status, int orderType, long deliveryCharge,
+                         long totalPrice, long discount, int customerId, String summary, String remarks, String customerName) {
+        super(id, date, receiptNumber, status, orderType, deliveryCharge, totalPrice, discount, customerId, summary, remarks);
         this.customerName = customerName;
     }
 
     @Ignore
-    public SalesOrderDto(long totalPrice, String description) {
-        super(totalPrice, description);
+    public SalesOrderDto(long totalPrice, String summary) {
+        super(totalPrice, summary);
     }
 
     public String getCustomerName() {

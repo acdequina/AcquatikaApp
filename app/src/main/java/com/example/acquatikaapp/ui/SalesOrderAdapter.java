@@ -46,7 +46,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         SalesOrderItemDto transaction = mTransactions.get(position);
 
         holder.customerNameTv.setText(transaction.getName());
-        holder.salesDetailTv.setText(transaction.getDescription());
+        holder.salesDetailTv.setText(transaction.getSummary());
         holder.totalPriceTv.setText(
                 ValueUtil.convertPriceToDisplayValue(transaction.getTotalPrice()));
 

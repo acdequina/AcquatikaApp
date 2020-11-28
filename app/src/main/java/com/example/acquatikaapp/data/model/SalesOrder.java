@@ -29,6 +29,10 @@ public class SalesOrder {
     private int orderType;
 
     // * 100
+    @ColumnInfo(name = "delivery_charge")
+    private long deliveryCharge;
+
+    // * 100
     @ColumnInfo(name = "total_price")
     private long totalPrice;
 
@@ -37,39 +41,42 @@ public class SalesOrder {
     @ColumnInfo(name = "customer_id")
     private int customerId;
 
-    private String description;
+    private String summary;
 
     private String remarks;
 
+
     @Ignore
-    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description, String remarks) {
+    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks) {
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
         this.orderType = orderType;
+        this.deliveryCharge = deliveryCharge;
         this.totalPrice = totalPrice;
         this.discount = discount;
         this.customerId = customerId;
-        this.description = description;
+        this.summary = summary;
         this.remarks = remarks;
     }
 
     @Ignore
-    public SalesOrder(long totalPrice, String description) {
+    public SalesOrder(long totalPrice, String summary) {
         this.totalPrice = totalPrice;
-        this.description = description;
+        this.summary = summary;
     }
 
-    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long totalPrice, long discount, int customerId, String description, String remarks) {
+    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks) {
         this.id = id;
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
         this.orderType = orderType;
+        this.deliveryCharge = deliveryCharge;
         this.totalPrice = totalPrice;
         this.discount = discount;
         this.customerId = customerId;
-        this.description = description;
+        this.summary = summary;
         this.remarks = remarks;
     }
 
@@ -137,12 +144,12 @@ public class SalesOrder {
         this.customerId = customerId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getRemarks() {
@@ -151,5 +158,13 @@ public class SalesOrder {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public long getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(long deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
     }
 }

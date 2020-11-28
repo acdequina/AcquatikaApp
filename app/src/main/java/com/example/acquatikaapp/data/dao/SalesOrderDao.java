@@ -34,8 +34,8 @@ public interface SalesOrderDao {
     void delete(SalesOrder salesOrder);
 
     @Query("SELECT sales_order.id, date, receipt_number," +
-            "status, order_type, total_price, " +
-            "discount, customer_id, description, customer.name as customerName, " +
+            "status, order_type, delivery_charge, total_price, " +
+            "discount, customer_id, summary, customer.name as customerName, " +
             "remarks " +
             "FROM sales_order " +
             "LEFT JOIN customer ON customer.id = sales_order.customer_id " +
@@ -55,7 +55,7 @@ public interface SalesOrderDao {
             "sales_order.total_price as totalPrice, " +
             "sales_order.date as date, " +
             "sales_order.order_type as orderType, " +
-            "sales_order.description as description, " +
+            "sales_order.summary as summary, " +
             "sales_order.status as status " +
             "FROM sales_order " +
             "LEFT JOIN customer ON customer.id = sales_order.customer_id " +
@@ -72,8 +72,8 @@ public interface SalesOrderDao {
 
     @Transaction
     @Query("SELECT customer.name as customerName, sales_order.id as salesOrderId, " +
-            "date, status, order_type as orderType, total_price as totalPrice, " +
-            "discount, ifnull(sales_detail.remarks, product.name) as productName, " +
+            "date, status, order_type as orderType, delivery_charge as deliveryCharge, total_price as totalPrice, " +
+            "discount, ifnull(sales_detail.description, product.name) as productName, " +
             "sales_detail.price as price, quantity, sales_order.remarks as remarks " +
             "FROM sales_order " +
             "JOIN customer ON sales_order.customer_id = customer.id " +

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -26,11 +27,9 @@ import com.example.acquatikaapp.R;
 import com.example.acquatikaapp.data.dto.DashboardProductsCountDto;
 import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
 import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
-import com.example.acquatikaapp.data.model.Product;
 import com.example.acquatikaapp.data.util.Constants;
 import com.example.acquatikaapp.data.util.DataExporter;
 import com.example.acquatikaapp.data.util.NumberUtil;
-import com.example.acquatikaapp.ui.util.DateUtil;
 import com.example.acquatikaapp.ui.util.ValueUtil;
 import com.example.acquatikaapp.ui.util.TimeAxisValueFormatter;
 import com.github.mikephil.charting.charts.LineChart;
@@ -47,7 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().setElevation(0);
 
         setupLayout();
@@ -223,7 +220,9 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         for (SalesLineGraphDto data : salesLineGraphDtos) {
             total += data.getTotalPrice() / 100L;
 
-            float xValue = NumberUtil.mapRange((float) minValue, (float) maxValue, Constants.TIME_XAXIS_MIN, Constants.TIME_XAXIS_MAX, (float) data.getDate().getTime());
+            float xValue = NumberUtil.mapRangeDateToAxis(minValue, maxValue,
+                    Constants.TIME_XAXIS_MIN, Constants.TIME_XAXIS_MAX, data.getDate().getTime());
+
             values.add(new Entry(xValue, total));
         }
 

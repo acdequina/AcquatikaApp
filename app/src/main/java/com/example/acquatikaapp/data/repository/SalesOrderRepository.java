@@ -95,6 +95,8 @@ public class SalesOrderRepository {
                 salesDetailRepository.insertSalesDetails(salesOrderId, salesDetails);
             }
         });
+
+        Log.i(TAG,"FINISHED INSERTING TRANSACTION");
     }
 
     public LiveData<SalesOrderDto> getSalesOrderDetailsById(long id) {
