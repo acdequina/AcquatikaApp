@@ -1,210 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SalesOrderEditorActivity"
+    android:orientation="vertical"
     android:padding="8dp"
-    android:orientation="vertical">
+    tools:context=".ui.sales.editor.SalesOrderEditorActivity">
 
     <LinearLayout
         android:id="@+id/editor_upper_vg"
+        style="@style/EditorSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/EditorSection">
+        android:orientation="horizontal">
 
         <AutoCompleteTextView
             android:id="@+id/editor_customer_name_atv"
+            style="@style/LargeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/LargeText"
-            android:hint="Customer name"/>
+            android:hint="Customer name" />
 
         <TextView
             android:id="@+id/editor_customer_name_tv"
+            style="@style/LargeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/LargeText"
-            android:hint="Customer name"
             android:layout_gravity="center_vertical"
-            android:visibility="gone"/>
+            android:hint="Customer name"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/editor_date_tv"
+                style="@style/ListItemLargeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ListItemLargeText"
-                tools:text="9/11/2020"
+                android:clickable="true"
+                android:gravity="right"
                 android:paddingBottom="4dp"
-                android:gravity="right"/>
+                tools:text="9/11/2020" />
+
             <TextView
                 android:id="@+id/editor_time_tv"
+                style="@style/ListItemSubText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ListItemSubText"
                 android:gravity="right"
-                tools:text="5:37 PM"/>
+                tools:text="5:37 PM" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        style="@style/EditorSection"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        style="@style/EditorSection">
+        android:orientation="vertical">
+
         <ListView
             android:id="@+id/editor_sales_detail_lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/sales_detail_item_layout"/>
+            tools:listitem="@layout/sales_detail_item_layout" />
     </LinearLayout>
 
     <LinearLayout
+        style="@style/EditorSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/EditorSection"
         android:orientation="vertical">
 
         <TextView
+            style="@style/ListItemLargeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ListItemLargeText"
-            android:text="Order Type:"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp"
+            android:text="Order Type:" />
 
         <RadioGroup
+            android:id="@+id/editor_order_type_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editor_order_type_rg"
-            android:orientation="horizontal"
+            android:gravity="center"
             android:minHeight="90dp"
-            android:gravity="center">
+            android:orientation="horizontal">
+
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/radio_selector"
                 android:id="@+id/editor_walkin_rb"
-                android:text="Walk-in"
-                android:drawableLeft="@drawable/ic_store_white_24dp"
                 style="@style/RadioButtonSelection"
-                android:layout_marginRight="60dp"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/radio_selector"
+                android:drawableStart="@drawable/ic_store_white_24dp"
+                android:text="Walk-in" />
+
             <RadioButton
+                android:id="@+id/editor_delivery_rb"
+                style="@style/RadioButtonSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radio_selector"
-                android:id="@+id/editor_delivery_rb"
-                android:text="Delivery"
-                android:drawableLeft="@drawable/ic_local_shipping_white_24dp"
-                style="@style/RadioButtonSelection"
-                android:layout_marginLeft="60dp"/>
+                android:drawableStart="@drawable/ic_local_shipping_white_24dp"
+                android:text="Delivery" />
+
         </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/distributor_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/ListItemLargeText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Dealer:" />
+
+            <Switch
+                android:id="@+id/distributor_sw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
             android:background="@android:color/white"
-            android:layout_marginTop="24dp">
+            android:orientation="horizontal">
 
             <TextView
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                style="@style/ListItemLargeText"
-                android:text="Pending order:"/>
+                android:text="Pending order:" />
 
             <Switch
                 android:id="@+id/pending_order_sw"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
             android:background="@android:color/white"
-            android:layout_marginTop="16dp">
+            android:orientation="horizontal">
 
             <TextView
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ListItemLargeText"
-                android:text="Remarks:"
-                android:paddingRight="8dp" />
+                android:paddingRight="8dp"
+                android:text="Remarks:" />
 
             <EditText
                 android:id="@+id/editor_remarks_et"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        style="@style/EditorSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@style/EditorSection">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ListItemLargeText"
-                android:textStyle="normal"
                 android:layout_centerVertical="true"
-                android:text="Discount: "/>
+                android:text="Discount: "
+                android:textStyle="normal" />
+
             <EditText
                 android:id="@+id/editor_discount_et"
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ListItemLargeText"
                 android:layout_alignParentRight="true"
-                android:textStyle="normal"
-                android:gravity="end"
-                android:inputType="number"
                 android:digits="0123456789"
+                android:gravity="end"
                 android:hint="0"
-                tools:text="0"/>
+                android:inputType="number"
+                android:textStyle="normal"
+                tools:text="0" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ListItemLargeText"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:text="Total: "/>
+                android:text="Total: "
+                android:textAppearance="?android:textAppearanceLarge" />
+
             <TextView
                 android:id="@+id/editor_total_tv"
+                style="@style/ListItemLargeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:layout_alignParentRight="true"
-                style="@style/ListItemLargeText"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:inputType="number"
+                android:gravity="end"
                 android:hint="0"
-                tools:text="0.00"/>
+                android:inputType="number"
+                android:textAppearance="?android:textAppearanceLarge"
+                tools:text="0.00" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -213,15 +242,16 @@
         android:id="@+id/editor_buttons_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="8dp">
+
         <Button
             android:id="@+id/editor_checkout_btn"
+            style="@style/OkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/OkButton"
-            android:text="Checkout"/>
+            android:text="Checkout" />
     </LinearLayout>
 </LinearLayout>

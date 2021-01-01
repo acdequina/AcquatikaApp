@@ -22,7 +22,6 @@ import com.example.acquatikaapp.data.util.AppExecutors;
 import com.example.acquatikaapp.data.util.DateConverter;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Database(entities = {Customer.class, Product.class,
@@ -37,6 +36,18 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
     // for singleton instantiation
     private static final Object LOCK = new Object();
     private static AcquatikaDatabase sInstance;
+    private static RoomDatabase.Callback prePopulateDbRoomCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    new PrePopulateDbDefaultData(sInstance);
+                }
+            });
+        }
+    };
 
     public static AcquatikaDatabase getInstance(final Context context) {
         if(sInstance == null) {
@@ -53,18 +64,13 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
         return sInstance;
     }
 
-    private static RoomDatabase.Callback prePopulateDbRoomCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    new PrePopulateDbDefaultData(sInstance);
-                }
-            });
-        }
-    };
+    public abstract CustomerDao customerDao();
+
+    public abstract ProductDao productDao();
+
+    public abstract SalesOrderDao salesOrderDao();
+
+    public abstract SalesDetailDao salesDetailDao();
 
     public static class PrePopulateDbDefaultData {
         private PrePopulateDbDefaultData(AcquatikaDatabase database) {
@@ -107,10 +113,5 @@ public abstract class AcquatikaDatabase extends RoomDatabase {
             return products;
         }
     }
-
-    public abstract CustomerDao customerDao();
-    public abstract ProductDao productDao();
-    public abstract SalesOrderDao salesOrderDao();
-    public abstract SalesDetailDao salesDetailDao();
 
 }

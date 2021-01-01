@@ -1,6 +1,12 @@
 package com.example.acquatikaapp.ui.util;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.example.acquatikaapp.R;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,23 +33,31 @@ public final class DateUtil {
         return calendar.getTime();
     }
 
+    public static Date generateDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DATE, day);
+        return calendar.getTime();
+    }
+
     public static String convertDateToStringDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = DateFormat.getDateInstance();
         return dateFormat.format(date);
     }
 
     public static String convertDateToStringTime(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         return dateFormat.format(date);
     }
 
     public static String convertDateTimeToString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy-hh:mm-aa");
+        DateFormat dateFormat = DateFormat.getDateTimeInstance();
         return dateFormat.format(date);
     }
 
     public static String convertEpochMilliToTimeString(long epochMilli) {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        DateFormat dateFormat = DateFormat.getTimeInstance();
         return dateFormat.format(epochMilli);
     }
 

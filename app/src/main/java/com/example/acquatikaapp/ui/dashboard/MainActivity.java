@@ -1,4 +1,14 @@
-package com.example.acquatikaapp.ui;
+package com.example.acquatikaapp.ui.dashboard;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,43 +19,21 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.ActionBar;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.acquatikaapp.R;
 import com.example.acquatikaapp.data.dto.DashboardProductsCountDto;
 import com.example.acquatikaapp.data.dto.SalesLineGraphDto;
 import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
-import com.example.acquatikaapp.data.util.Constants;
 import com.example.acquatikaapp.data.util.DataExporter;
-import com.example.acquatikaapp.data.util.NumberUtil;
+import com.example.acquatikaapp.ui.item.selection.AddSalesItemActivity;
+import com.example.acquatikaapp.ui.sales.editor.SalesOrderAdapter;
+import com.example.acquatikaapp.ui.sales.editor.SalesOrderEditorActivity;
 import com.example.acquatikaapp.ui.util.ValueUtil;
-import com.example.acquatikaapp.ui.util.TimeAxisValueFormatter;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
@@ -60,18 +48,15 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
     private TextView mProductLeftCountTv;
     private TextView mProductCenterCountTv;
     private TextView mOthersCountTv;
-    private LineChart mSalesLineChart;
+    private DashboardSalesChart mDashBoardChart;
 
-    private FloatingActionButton mAddSalesOrderButton;
-
-    private RecyclerView mCurrentSalesOrderRv;
     private SalesOrderAdapter mSalesOrderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setElevation(0);
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         setupLayout();
         setupViewModel();
@@ -79,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
 
     private void setupLayout() {
         //Setup Recycler View
-        mCurrentSalesOrderRv = findViewById(R.id.current_sales_orders_rv);
+        RecyclerView mCurrentSalesOrderRv = findViewById(R.id.current_sales_orders_rv);
         mCurrentSalesOrderRv.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), VERTICAL);
         mCurrentSalesOrderRv.addItemDecoration(decoration);
@@ -88,9 +73,7 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         //Setup Adapter
         mSalesOrderAdapter = new SalesOrderAdapter(this, true, this);
         mCurrentSalesOrderRv.setAdapter(mSalesOrderAdapter);
-
-        //Line chart
-        setupLineChart();
+        mDashBoardChart = new DashboardSalesChart(this, findViewById(R.id.sales_line_chart));
 
         mCurrentDateTv = findViewById(R.id.dashboard_date_tv);
         mCurrentTotalSalesTv = findViewById(R.id.current_total_sales_tv);
@@ -100,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         mProductCenterCountTv = findViewById(R.id.product_center_count_tv);
         mOthersCountTv = findViewById(R.id.others_count_tv);
 
-        DateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+        DateFormat dateFormat = DateFormat.getDateInstance();
         String currentDateString = dateFormat.format(new Date());
 
         mCurrentDateTv.setText(currentDateString);
 
-        mAddSalesOrderButton = findViewById(R.id.sales_order_add_fab);
+        FloatingActionButton mAddSalesOrderButton = findViewById(R.id.sales_order_add_fab);
         mAddSalesOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
                     return;
                 }
 
-                Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(MainActivity.this, R.string.permission_denied_external_storage, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -157,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         viewModel.getCurrentSalesOrders().observe(this, new Observer<List<SalesOrderItemDto>>() {
             @Override
             public void onChanged(List<SalesOrderItemDto> transactionDtos) {
-                Log.d(TAG, "Updating list of transactions from LiveData in ViewModel");
                 mSalesOrderAdapter.setTransactions(transactionDtos);
             }
         });
@@ -190,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         viewModel.getSalesLineGraphValues().observe(this, new Observer<List<SalesLineGraphDto>>() {
             @Override
             public void onChanged(List<SalesLineGraphDto> salesLineGraphDtos) {
-                setLineChartData(salesLineGraphDtos);
+                mDashBoardChart.setData(salesLineGraphDtos);
             }
         });
     }
@@ -200,96 +181,5 @@ public class MainActivity extends AppCompatActivity implements SalesOrderAdapter
         Intent intent = new Intent(MainActivity.this, SalesOrderEditorActivity.class);
         intent.putExtra(SalesOrderEditorActivity.SALES_ORDER_EDIT_EXTRA, itemId);
         startActivity(intent);
-    }
-
-    private void setLineChartData(List<SalesLineGraphDto> salesLineGraphDtos) {
-
-        if(salesLineGraphDtos == null || salesLineGraphDtos.isEmpty()) {
-            return;
-        }
-
-        List<Entry> values = new ArrayList<>();
-
-        long minValue = salesLineGraphDtos.get(0).getDate().getTime();
-        long maxValue = salesLineGraphDtos.get(salesLineGraphDtos.size() - 1).getDate().getTime();
-
-        XAxis xAxis = mSalesLineChart.getXAxis();
-        xAxis.setValueFormatter(new TimeAxisValueFormatter(minValue, maxValue));
-
-        long total = 0;
-        for (SalesLineGraphDto data : salesLineGraphDtos) {
-            total += data.getTotalPrice() / 100L;
-
-            float xValue = NumberUtil.mapRangeDateToAxis(minValue, maxValue,
-                    Constants.TIME_XAXIS_MIN, Constants.TIME_XAXIS_MAX, data.getDate().getTime());
-
-            values.add(new Entry(xValue, total));
-        }
-
-        LineDataSet set = setupLineChartSet(values);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set);
-
-        LineData data = new LineData(dataSets);
-
-        mSalesLineChart.setData(data);
-        mSalesLineChart.invalidate();
-    }
-
-    private LineDataSet setupLineChartSet(List<Entry> values) {
-        LineDataSet set;
-
-        if(values.isEmpty()) {
-            set = new LineDataSet(values, "Sales overtime");
-            set.setDrawCircles(true);
-            set.enableDashedLine(10f, 0f, 0f);
-            set.enableDashedHighlightLine(10f, 0f, 0f);
-
-            return set;
-        }
-
-        set = new LineDataSet(values, "");
-        set.setFillAlpha(110);
-
-        set.setColor(Color.WHITE);
-        set.setCircleColor(Color.WHITE);
-        set.setLineWidth(2f);//line size
-        set.setCircleRadius(5f);
-        set.setDrawCircleHole(true);
-        set.setCircleHoleColor(getColor(R.color.colorPrimary));
-        set.setDrawFilled(true); // under the line fill
-        set.setFormLineWidth(5f);
-        set.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-        set.setFormSize(5.f);
-        set.setFillColor(Color.WHITE); // under the line fill
-        set.setDrawValues(false);
-
-        return set;
-    }
-
-    private void setupLineChart() {
-        mSalesLineChart = findViewById(R.id.sales_line_chart);
-        mSalesLineChart.setTouchEnabled(true);
-        mSalesLineChart.setPinchZoom(true);
-        mSalesLineChart.getDescription().setEnabled(false);
-
-        YAxis leftAxis = mSalesLineChart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setTextSize(10);
-        YAxis rightAxis = mSalesLineChart.getAxisRight();
-        rightAxis.setTextColor(Color.WHITE);
-        rightAxis.setTextSize(10);
-
-        XAxis xAxis = mSalesLineChart.getXAxis();
-        xAxis.setDrawGridLines(false);
-        //set x axis to bottom
-        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
-        xAxis.setPosition(position);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setLabelCount(Constants.TIME_XAXIS_MAX, true);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setGranularity(7f);
-        xAxis.setTextSize(10);
     }
 }

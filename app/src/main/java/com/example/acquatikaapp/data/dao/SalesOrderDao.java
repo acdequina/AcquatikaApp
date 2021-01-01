@@ -36,7 +36,7 @@ public interface SalesOrderDao {
     @Query("SELECT sales_order.id, date, receipt_number," +
             "status, order_type, delivery_charge, total_price, " +
             "discount, customer_id, summary, customer.name as customerName, " +
-            "remarks " +
+            "remarks, is_distributor " +
             "FROM sales_order " +
             "LEFT JOIN customer ON customer.id = sales_order.customer_id " +
             "WHERE sales_order.id = :id")
@@ -74,7 +74,8 @@ public interface SalesOrderDao {
     @Query("SELECT customer.name as customerName, sales_order.id as salesOrderId, " +
             "date, status, order_type as orderType, delivery_charge as deliveryCharge, total_price as totalPrice, " +
             "discount, ifnull(sales_detail.description, product.name) as productName, " +
-            "sales_detail.price as price, quantity, sales_order.remarks as remarks " +
+            "sales_detail.price as price, quantity, sales_order.remarks as remarks, " +
+            "sales_order.receipt_number as receiptNumber, sales_order.is_distributor as isDistributor " +
             "FROM sales_order " +
             "JOIN customer ON sales_order.customer_id = customer.id " +
             "JOIN sales_detail ON sales_order.id = sales_detail.sales_order_id " +

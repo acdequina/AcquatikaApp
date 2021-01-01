@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.AddSalesItemActivity"
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.SalesOrderEditorActivity"
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.MainActivity">
+            android:name=".ui.item.selection.AddSalesItemActivity"
+            android:parentActivityName=".ui.dashboard.MainActivity"/>
+        <activity android:name=".ui.sales.editor.SalesOrderEditorActivity"
+            android:parentActivityName=".ui.dashboard.MainActivity"/>
+        <activity android:name=".ui.dashboard.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -25,7 +25,7 @@ public class CustomerRepository {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-               customerDao.insert(customer);
+                customerDao.insert(customer);
             }
         });
     }
@@ -54,7 +54,7 @@ public class CustomerRepository {
 
     public int getOrInsertCustomerByName(String name) {
         int customerId = (int) customerDao.getCustomerIdByName(name);
-        if(customerId > 0) {
+        if (customerId > 0) {
             return customerId;
         }
 

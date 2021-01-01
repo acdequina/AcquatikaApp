@@ -28,7 +28,11 @@ public class ExportDataDto {
 
     private long totalPrice;
 
-    public ExportDataDto(String customerName, Date date, long discount, int orderType, long deliveryCharge, long price, String productName, int quantity, String remarks, long salesOrderId, int status, long totalPrice) {
+    private boolean isDistributor;
+
+    private String receiptNumber;
+
+    public ExportDataDto(String customerName, Date date, long discount, int orderType, long deliveryCharge, long price, String productName, int quantity, String remarks, long salesOrderId, int status, long totalPrice, boolean isDistributor, String receiptNumber) {
         this.customerName = customerName;
         this.date = date;
         this.discount = discount;
@@ -41,6 +45,8 @@ public class ExportDataDto {
         this.salesOrderId = salesOrderId;
         this.status = status;
         this.totalPrice = totalPrice;
+        this.isDistributor = isDistributor;
+        this.receiptNumber = receiptNumber;
     }
 
     public String getCustomerName() {
@@ -137,5 +143,21 @@ public class ExportDataDto {
 
     public void setDeliveryCharge(long deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
+    }
+
+    public boolean isDistributor() {
+        return isDistributor;
+    }
+
+    public void setDistributor(boolean distributor) {
+        isDistributor = distributor;
+    }
+
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        this.receiptNumber = receiptNumber;
     }
 }

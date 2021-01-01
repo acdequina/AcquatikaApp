@@ -36,5 +36,4 @@ public interface SalesDetailDao {
     LiveData<List<SalesDetailDto>> getSalesDetailsBySalesOrderId(long salesOrderId);
 
 
-
 }

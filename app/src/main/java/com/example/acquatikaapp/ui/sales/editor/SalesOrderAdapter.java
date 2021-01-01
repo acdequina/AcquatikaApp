@@ -1,4 +1,4 @@
-package com.example.acquatikaapp.ui;
+package com.example.acquatikaapp.ui.sales.editor;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -16,10 +16,10 @@ import com.example.acquatikaapp.R;
 import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.ui.util.ValueUtil;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.List;
 
-public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.SalesOrderViewHolder>{
+public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.SalesOrderViewHolder> {
 
     final private ItemClickListener mItemClickListener;
     private Context mContext;
@@ -42,7 +42,6 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
 
     @Override
     public void onBindViewHolder(@NonNull SalesOrderViewHolder holder, int position) {
-        String dateFormatPattern = "dd/M/yy - hh:mm a";
         SalesOrderItemDto transaction = mTransactions.get(position);
 
         holder.customerNameTv.setText(transaction.getName());
@@ -54,12 +53,13 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         GradientDrawable statusCircle = (GradientDrawable) holder.orderTypeStatusIv.getBackground();
         statusCircle.setColor(ContextCompat.getColor(mContext, getStatusColor(transaction.getStatus())));
 
-        if(mIsCurrentTransactions) {
-            dateFormatPattern = "hh:mm aa";
+        DateFormat dateFormat = DateFormat.getTimeInstance();
+
+        if (mIsCurrentTransactions) {
+            dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormatPattern);
-        String dateDisplayValue = formatter.format(transaction.getDate());
+        String dateDisplayValue = dateFormat.format(transaction.getDate());
 
         holder.dateTimeTv.setText(dateDisplayValue);
     }
@@ -76,6 +76,26 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
     public void setTransactions(List<SalesOrderItemDto> transactions) {
         mTransactions = transactions;
         notifyDataSetChanged();
+    }
+
+    private int getOrderImageId(int orderType) {
+        switch (orderType) {
+            case 1:
+                return R.drawable.ic_local_shipping_white_24dp;
+            case 0:
+            default:
+                return R.drawable.ic_store_white_24dp;
+        }
+    }
+
+    private int getStatusColor(int status) {
+        switch (status) {
+            case 1:
+                return R.color.flatRed;
+            case 0:
+            default:
+                return R.color.colorAccent;
+        }
     }
 
     public interface ItemClickListener {
@@ -106,26 +126,6 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Sa
         public void onClick(View v) {
             long elementId = mTransactions.get(getAdapterPosition()).getId();
             mItemClickListener.onItemClickListener(elementId);
-        }
-    }
-
-    private int getOrderImageId(int orderType) {
-        switch (orderType) {
-            case 1:
-                return R.drawable.ic_local_shipping_white_24dp;
-            case 0:
-            default:
-                return R.drawable.ic_store_white_24dp;
-        }
-    }
-
-    private int getStatusColor(int status) {
-        switch (status) {
-            case 1:
-                return R.color.flatRed;
-            case 0:
-            default:
-                return R.color.colorAccent;
         }
     }
 

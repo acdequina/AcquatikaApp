@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "sales_order",
-        indices = {@Index(name = "dateIdx", value = {"date"}, unique = true),
+        indices = {@Index(name = "dateIdx", value = {"date"}),
         @Index(name = "customerIdx", value = {"customer_id"})})
 public class SalesOrder {
 
@@ -45,9 +45,12 @@ public class SalesOrder {
 
     private String remarks;
 
+    @ColumnInfo(name = "is_distributor")
+    private boolean isDistributor;
+
 
     @Ignore
-    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks) {
+    public SalesOrder(Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks, boolean isDistributor) {
         this.date = date;
         this.receiptNumber = receiptNumber;
         this.status = status;
@@ -58,15 +61,21 @@ public class SalesOrder {
         this.customerId = customerId;
         this.summary = summary;
         this.remarks = remarks;
+        this.isDistributor = isDistributor;
     }
 
     @Ignore
-    public SalesOrder(long totalPrice, String summary) {
+    public SalesOrder(Date date, long totalPrice, long deliveryCharge, String summary) {
         this.totalPrice = totalPrice;
         this.summary = summary;
+        this.deliveryCharge = deliveryCharge;
+        this.date = date;
     }
 
-    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks) {
+    @Ignore
+    public SalesOrder() {}
+
+    public SalesOrder(long id, Date date, String receiptNumber, int status, int orderType, long deliveryCharge, long totalPrice, long discount, int customerId, String summary, String remarks, boolean isDistributor) {
         this.id = id;
         this.date = date;
         this.receiptNumber = receiptNumber;
@@ -78,6 +87,7 @@ public class SalesOrder {
         this.customerId = customerId;
         this.summary = summary;
         this.remarks = remarks;
+        this.isDistributor = isDistributor;
     }
 
     public long getId() {
@@ -166,5 +176,13 @@ public class SalesOrder {
 
     public void setDeliveryCharge(long deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
+    }
+
+    public boolean isDistributor() {
+        return isDistributor;
+    }
+
+    public void setDistributor(boolean distributor) {
+        isDistributor = distributor;
     }
 }

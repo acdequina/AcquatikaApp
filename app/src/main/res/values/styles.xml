@@ -16,7 +16,7 @@
     <style name="LargeTextLight" parent="LargeText">
         <item name="android:textColor">@android:color/white</item>
     </style>
-    
+
     <style name="HeaderSubTextLight">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">@color/shadedWhite</item>
@@ -35,7 +35,7 @@
         <item name="android:textColor">@color/darkGray</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="ListItemSubText">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">@color/gray</item>
@@ -62,9 +62,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">150dp</item>
         <item name="android:scaleType">center</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:clickable">true</item>
-        <item name="android:src">@drawable/ic_add_circle_outline_white_24dp</item>
     </style>
 
     <style name="CustomButton">
@@ -96,12 +95,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:padding">8dp</item>
-        <item name="android:scaleY">2.2</item>
-        <item name="android:scaleX">2.2</item>
+        <item name="android:scaleY">2</item>
+        <item name="android:scaleX">2</item>
         <item name="android:drawablePadding">4dp</item>
     </style>
-
-
-    
 
 </resources>

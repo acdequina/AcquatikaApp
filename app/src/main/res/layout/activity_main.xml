@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.dashboard.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,38 +13,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:background="@color/colorPrimary">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    style="@style/HeaderSubTextLight"
                     android:id="@+id/dashboard_date_tv"
+                    style="@style/HeaderSubTextLight"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textColor="@color/shadedWhite"
-                    tools:text="September 26, 2020 "/>
+                    tools:text="September 26, 2020 " />
 
                 <TextView
                     android:id="@+id/current_total_sales_tv"
+                    style="@style/LargeTextLight"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    style="@style/LargeTextLight"
                     android:textSize="30dp"
-                    tools:text="$1000"/>
-<!--                android:textSize="40dp"-->
+                    tools:text="$1000" />
+                <!--                android:textSize="40dp"-->
 
                 <TextView
                     style="@style/HeaderSubTextLight"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Current Sales"/>
+                    android:text="Current Sales" />
             </LinearLayout>
 
             <RelativeLayout
@@ -53,70 +52,70 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    style="@style/DashBoardItemLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:paddingStart="30dp"
-                    style="@style/DashBoardItemLayout">
+                    android:paddingStart="30dp">
 
                     <TextView
                         android:id="@+id/product_left_count_tv"
+                        style="@style/LargeTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLight"
-                        tools:text="10"/>
+                        tools:text="10" />
 
                     <TextView
                         android:id="@+id/product_left_label_tv"
+                        style="@style/HeaderSubTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/HeaderSubTextLight"
                         android:text="N/A"
-                        tools:text="Slim "/>
+                        tools:text="Slim " />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    style="@style/DashBoardItemLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DashBoardItemLayout"
                     android:layout_centerHorizontal="true">
 
                     <TextView
                         android:id="@+id/product_center_count_tv"
+                        style="@style/LargeTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLight"
-                        tools:text="20"/>
+                        tools:text="20" />
 
                     <TextView
                         android:id="@+id/product_center_label_tv"
+                        style="@style/HeaderSubTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/HeaderSubTextLight"
                         android:text="N/A"
-                        tools:text="Round"/>
+                        tools:text="Round" />
                 </LinearLayout>
 
                 <LinearLayout
+                    style="@style/DashBoardItemLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DashBoardItemLayout"
                     android:layout_alignParentRight="true"
                     android:paddingEnd="40dp">
 
                     <TextView
                         android:id="@+id/others_count_tv"
+                        style="@style/LargeTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/LargeTextLight"
-                        tools:text="15"/>
+                        tools:text="15" />
 
                     <TextView
+                        style="@style/HeaderSubTextLight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/HeaderSubTextLight"
-                        android:text="Others"/>
+                        android:text="Others" />
 
                 </LinearLayout>
 
@@ -125,14 +124,14 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
+
                 <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/sales_line_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/sales_line_chart"
-                    android:background="@color/colorPrimary"
-                    />
+                    android:background="@color/colorPrimary" />
             </FrameLayout>
 
         </LinearLayout>
@@ -147,13 +146,12 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sales_order_add_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sales_order_add_fab"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:tint="@android:color/white"
         android:src="@drawable/ic_add_shopping_cart_white_24dp"
-        />
+        android:tint="@android:color/white" />
 
 </FrameLayout>

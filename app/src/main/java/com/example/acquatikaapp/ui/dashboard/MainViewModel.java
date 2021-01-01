@@ -1,4 +1,4 @@
-package com.example.acquatikaapp.ui;
+package com.example.acquatikaapp.ui.dashboard;
 
 import android.app.Application;
 
@@ -56,7 +56,7 @@ public class MainViewModel extends AndroidViewModel {
         dashboardProductsCount = Transformations.map(productCount, new Function<List<TotalQuantityPerProductDto>, DashboardProductsCountDto>() {
             @Override
             public DashboardProductsCountDto apply(List<TotalQuantityPerProductDto> products) {
-               return generateDashboardProductsCount(products);
+                return generateDashboardProductsCount(products);
             }
         });
     }

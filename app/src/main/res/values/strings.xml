@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Acquatika</string>
+    <string name="sales_over_time">Sales over time</string>
+    <string name="permission_denied_external_storage">Permission denied to read your External storage</string>
+    <string name="no_product_selected">Please select at least 1 product.</string>
+    <string name="select_a_product">Select a Product</string>
+    <string name="delete_this_record_prompt">Delete this record?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="save">Save</string>
 </resources>

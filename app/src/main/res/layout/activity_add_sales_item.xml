@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.AddSalesItemActivity"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".ui.item.selection.AddSalesItemActivity">
 
     <RelativeLayout
         android:id="@+id/item_selection_rl"
@@ -16,11 +16,12 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/first_card_item"
+            style="@style/ItemCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemCardView"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/shadedWhite">
+            app:cardBackgroundColor="@color/shadedWhite"
+            app:cardCornerRadius="8dp">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -28,59 +29,63 @@
                 <ImageView
                     android:id="@+id/add_item_left_product_iv"
                     style="@style/ItemImageSelection"
-                    android:src="@drawable/slim_gallon"/>
+                    android:src="@drawable/slim_gallon" />
 
                 <TextView
                     android:id="@+id/add_item_left_product_count_tv"
                     style="@style/TintedText"
-                    tools:text="Slim"/>
+                    tools:text="Slim" />
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/second_card_item"
+            style="@style/ItemCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemCardView"
-            app:cardCornerRadius="8dp"
+            android:layout_below="@+id/first_card_item"
             app:cardBackgroundColor="@color/shadedWhite"
-            android:layout_below="@+id/first_card_item">
+            app:cardCornerRadius="8dp">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/add_item_center_product_iv"
                     style="@style/ItemImageSelection"
-                    android:src="@drawable/round_gallon"/>
+                    android:src="@drawable/round_gallon" />
 
                 <TextView
                     android:id="@+id/add_item_center_product_count_tv"
                     style="@style/TintedText"
-                    tools:text="Round"/>
+                    tools:text="Round" />
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/custom_card_item"
+            style="@style/ItemCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemCardView"
-            app:cardCornerRadius="8dp"
+            android:layout_below="@+id/second_card_item"
             app:cardBackgroundColor="@color/shadedWhite"
-            android:layout_below="@+id/second_card_item">
+            app:cardCornerRadius="8dp">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/add_item_custom_iv"
                     style="@style/ItemImageSelection"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/custom_product"/>
+                    android:src="@drawable/custom_product" />
 
                 <TextView
                     android:id="@+id/add_item_custom_count_tv"
                     style="@style/TintedText"
-                    tools:text="Custom"/>
+                    tools:text="Custom" />
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
@@ -90,33 +95,33 @@
         android:id="@+id/custom_product_form_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/item_selection_rl"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_below="@+id/item_selection_rl">
+        android:visibility="gone">
 
         <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:background="#f6f6f6"
-            android:layout_height="8dp"
-            android:layout_width="match_parent" />
+            android:background="#f6f6f6" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_gravity="right"
             android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:layout_gravity="right">
+            android:paddingRight="8dp">
 
             <EditText
                 android:id="@+id/add_item_customer_product_name_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginRight="16dp"
-                android:hint="Custom name"/>
+                android:layout_weight="1"
+                android:hint="Custom name" />
 
             <LinearLayout
                 android:layout_width="100dp"
@@ -126,17 +131,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P"/>
+                    android:text="P" />
 
                 <EditText
                     android:id="@+id/add_item_customer_product_price_et"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:digits="0123456789"
                     android:gravity="right"
-                    android:hint="0"/>
+                    android:hint="0"
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -145,11 +150,11 @@
 
     <Button
         android:id="@+id/sales_item_place_order_btn"
-        android:layout_alignParentBottom="true"
+        style="@style/OkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/OkButton"
+        android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:text="Place Order"/>
+        android:text="Place Order" />
 
 </RelativeLayout>

@@ -14,9 +14,7 @@ import com.example.acquatikaapp.data.dto.SalesOrderItemDto;
 import com.example.acquatikaapp.data.model.SalesDetail;
 import com.example.acquatikaapp.data.model.SalesOrder;
 import com.example.acquatikaapp.data.util.AppExecutors;
-import com.example.acquatikaapp.ui.SalesOrderEditorActivity;
 
-import java.sql.SQLDataException;
 import java.util.Date;
 import java.util.List;
 
@@ -81,22 +79,21 @@ public class SalesOrderRepository {
 
     }
 
-    public void insertSalesOrderTransaction(final String customerName, final SalesOrder salesOrder, final List<SalesDetail> salesDetails,
+    public void insertSalesOrderTransaction(final String customerName, final SalesOrder salesOrder, final List<? extends SalesDetail> salesDetails,
                                             final CustomerRepository customerRepository, final SalesDetailRepository salesDetailRepository) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 int customerId = customerRepository.getOrInsertCustomerByName(customerName);
                 salesOrder.setCustomerId(customerId);
-
-                salesOrder.setDate(new Date());
-                //TODO create receipt number generator
+                Date date = new Date();
+                salesOrder.setDate(salesOrder.getDate());
+                //TODO create receipt number generator (temporary get RO from epoch)
+                salesOrder.setReceiptNumber(String.valueOf(date.getTime()));
                 long salesOrderId = salesOrderDao.insert(salesOrder);
-                salesDetailRepository.insertSalesDetails(salesOrderId, salesDetails);
+                salesDetailRepository.insertSalesDetails(salesOrderId, (List<SalesDetail>) salesDetails);
             }
         });
-
-        Log.i(TAG,"FINISHED INSERTING TRANSACTION");
     }
 
     public LiveData<SalesOrderDto> getSalesOrderDetailsById(long id) {

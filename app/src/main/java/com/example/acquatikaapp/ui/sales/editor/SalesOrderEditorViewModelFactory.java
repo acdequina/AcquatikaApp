@@ -1,4 +1,4 @@
-package com.example.acquatikaapp.ui;
+package com.example.acquatikaapp.ui.sales.editor;
 
 import android.app.Application;
 

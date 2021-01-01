@@ -1,4 +1,4 @@
-package com.example.acquatikaapp.ui;
+package com.example.acquatikaapp.ui.sales.editor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ public class SalesDetailAdapter extends ArrayAdapter<SalesDetailDto> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItemView = convertView;
-        if(listItemView == null) {
+        if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.sales_detail_item_layout, parent, false);
         }

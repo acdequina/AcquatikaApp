@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.MainActivity"
     android:background="?android:attr/selectableItemBackground"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".ui.dashboard.MainActivity">
 
     <ImageView
         android:id="@+id/order_type_status_iv"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_store_white_24dp"
+        android:background="@drawable/circle"
         android:padding="8dp"
-        android:background="@drawable/circle"/>
-    
+        android:src="@drawable/ic_store_white_24dp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
         android:layout_toRightOf="@+id/order_type_status_iv"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
 
         <TextView
-            style="@style/ListItemLargeText"
             android:id="@+id/customer_name_tv"
+            style="@style/ListItemLargeText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            tools:text="Customer name"/>
+            tools:text="Customer name" />
+
         <TextView
-            style="@style/ListItemSubText"
             android:id="@+id/sales_description_tv"
+            style="@style/ListItemSubText"
             android:layout_height="wrap_content"
-            tools:text="Slim: x 1   Round: x 2   Others: x 2"
+            android:ellipsize="end"
             android:singleLine="true"
-            android:ellipsize="end"/>
+            tools:text="Slim: x 1   Round: x 2   Others: x 2" />
 
     </LinearLayout>
 
@@ -43,21 +43,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:orientation="vertical"
-        android:gravity="right">
+        android:gravity="right"
+        android:orientation="vertical">
 
         <TextView
-            style="@style/ListItemLargeText"
             android:id="@+id/total_price_tv"
+            style="@style/ListItemLargeText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            tools:text="80"/>
+            tools:text="80" />
+
         <TextView
-            style="@style/ListItemSubText"
             android:id="@+id/date_time_tv"
+            style="@style/ListItemSubText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            tools:text="18:01"/>
+            tools:text="18:01" />
 
     </LinearLayout>
 

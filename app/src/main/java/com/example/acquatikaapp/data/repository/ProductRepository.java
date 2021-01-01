@@ -17,11 +17,10 @@ import java.util.List;
 
 public class ProductRepository {
 
+    private static final int PRODUCT_DASHBOARD_LIMIT = 2;
+    private static final String TAG = ProductRepository.class.getSimpleName();
     private ProductDao productDao;
     private AppExecutors appExecutors;
-    private static final int PRODUCT_DASHBOARD_LIMIT = 2;
-
-    private static final String TAG = ProductRepository.class.getSimpleName();
 
     public ProductRepository(Application application) {
         productDao = AcquatikaDatabase.getInstance(application).productDao();
