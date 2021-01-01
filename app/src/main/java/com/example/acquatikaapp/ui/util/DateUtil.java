@@ -57,7 +57,7 @@ public final class DateUtil {
     }
 
     public static String convertEpochMilliToTimeString(long epochMilli) {
-        DateFormat dateFormat = DateFormat.getTimeInstance();
+        DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         return dateFormat.format(epochMilli);
     }
 
